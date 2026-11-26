@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Emadi Theme · Desk bundle
+   Loaded via hooks.app_include_css after Frappe/ERPNext desk styles.
+   Order matters: tokens → base → layout → components → views → responsive.
+   ========================================================================== */
+
+@import "./tokens";
+
+@import "./desk/base";
+@import "./desk/navbar";
+@import "./desk/rail";
+@import "./desk/page";
+@import "./desk/sidebar";
+
+@import "./desk/components";
+
+@import "./desk/workspace";
+@import "./desk/list";
+@import "./desk/form";
+@import "./desk/grid";
+@import "./desk/report";
+
+@import "./desk/responsive";

@@ -1,0 +1,417 @@
+/* ==========================================================================
+   Emadi Theme · Design tokens
+   --------------------------------------------------------------------------
+   1. Own tokens are prefixed --et-*.
+   2. Frappe "espresso" tokens are re-mapped onto them so every core
+      component inherits the new design system automatically.
+   3. Light tokens are scoped to :root:not([data-theme="dark"]) so they never
+      leak into dark mode; dark tokens use :root[data-theme="dark"].
+   ========================================================================== */
+
+/* ---------- Theme-independent scales ---------- */
+:root {
+	/* Typography */
+	--et-font: "InterVariable", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, sans-serif;
+	--et-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	--et-fs-2xs: 11px;
+	--et-fs-xs: 12px;
+	--et-fs-sm: 13px;
+	--et-fs-base: 14px;
+	--et-fs-md: 15px;
+	--et-fs-lg: 18px;
+	--et-fs-xl: 22px;
+	--et-fs-2xl: 26px;
+	--et-fs-3xl: 30px;
+	--et-fw-regular: 420;
+	--et-fw-medium: 520;
+	--et-fw-semibold: 600;
+	--et-fw-bold: 680;
+	--et-lh-tight: 1.25;
+	--et-lh-base: 1.5;
+	--et-tracking-tight: -0.018em;
+	--et-tracking-caps: 0.06em;
+
+	/* Spacing (4px base) */
+	--et-sp-1: 4px;
+	--et-sp-2: 8px;
+	--et-sp-3: 12px;
+	--et-sp-4: 16px;
+	--et-sp-5: 20px;
+	--et-sp-6: 24px;
+	--et-sp-8: 32px;
+	--et-sp-10: 40px;
+
+	/* Radius (6–10px system) */
+	--et-r-xs: 4px;
+	--et-r-sm: 6px;
+	--et-r-md: 8px;
+	--et-r-lg: 10px;
+	--et-r-xl: 12px;
+	--et-r-full: 999px;
+
+	/* Motion */
+	--et-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+	--et-dur-fast: 120ms;
+	--et-dur: 180ms;
+	--et-dur-slow: 260ms;
+
+	/* Layout */
+	--et-rail-w: 68px;
+	--et-rail-w-open: 248px;
+	--et-nav-h: 56px;
+	--et-control-h: 34px;
+	--et-control-h-sm: 30px;
+
+	/* Frappe scale re-map */
+	--font-stack: var(--et-font);
+	--border-radius-tiny: var(--et-r-xs);
+	--border-radius-sm: var(--et-r-sm);
+	--border-radius: var(--et-r-md);
+	--border-radius-md: var(--et-r-lg);
+	--border-radius-lg: var(--et-r-lg);
+	--border-radius-xl: var(--et-r-xl);
+	--border-radius-2xl: var(--et-r-xl);
+	--navbar-height: var(--et-nav-h);
+	--input-height: var(--et-control-h);
+	--btn-height: var(--et-control-h-sm);
+	--text-xs: 12px;
+	--text-sm: 13px;
+	--text-md: 13px;
+	--text-base: 14px;
+	--text-lg: 16px;
+	--text-xl: 18px;
+	--text-2xl: 20px;
+	--text-3xl: 24px;
+}
+
+/* ---------- Light ---------- */
+:root:not([data-theme="dark"]) {
+	/* Brand */
+	--et-navy: #142b49;
+	--et-navy-2: #1b3860;
+	--et-navy-3: #24476f;
+	--et-slate: #345477;
+	--et-accent: #3478f6;
+	--et-accent-hover: #2563eb;
+	--et-accent-soft: #eaf1fe;
+	--et-accent-soft-2: #d7e5fd;
+	--et-accent-ring: rgba(52, 120, 246, 0.22);
+
+	/* Surfaces */
+	--et-bg: #f5f7fa;
+	--et-surface: #ffffff;
+	--et-surface-2: #fafbfc;
+	--et-surface-3: #f2f5f9;
+	--et-surface-hover: #f4f6fa;
+	--et-overlay: rgba(12, 22, 38, 0.42);
+
+	/* Text */
+	--et-text: #172033;
+	--et-text-2: #3a465a;
+	--et-text-muted: #697586;
+	--et-text-subtle: #8a95a5;
+	--et-text-inverse: #ffffff;
+
+	/* Lines */
+	--et-border: #e5e9f0;
+	--et-border-strong: #d3dae4;
+	--et-divider: #edf0f5;
+
+	/* Controls */
+	--et-input-bg: #ffffff;
+	--et-input-border: #d8dee8;
+	--et-input-border-hover: #b9c3d1;
+	--et-input-disabled: #f4f6f9;
+
+	/* Status */
+	--et-success: #16a36a;
+	--et-success-soft: #e7f6ef;
+	--et-success-text: #0f7a4f;
+	--et-warning: #e9a23b;
+	--et-warning-soft: #fdf4e6;
+	--et-warning-text: #9a6212;
+	--et-danger: #dc5252;
+	--et-danger-soft: #fdeeee;
+	--et-danger-text: #b03a3a;
+	--et-info-soft: var(--et-accent-soft);
+	--et-info-text: #1f5bd0;
+	--et-neutral-soft: #eef1f5;
+	--et-neutral-text: #4d5a6c;
+
+	/* Elevation */
+	--et-shadow-xs: 0 1px 1px rgba(16, 28, 48, 0.04);
+	--et-shadow-sm: 0 1px 2px rgba(16, 28, 48, 0.06), 0 0 0 1px rgba(16, 28, 48, 0.02);
+	--et-shadow-md: 0 4px 10px -2px rgba(16, 28, 48, 0.08), 0 2px 4px -2px rgba(16, 28, 48, 0.05);
+	--et-shadow-lg: 0 12px 28px -8px rgba(16, 28, 48, 0.16), 0 4px 8px -4px rgba(16, 28, 48, 0.06);
+	--et-shadow-xl: 0 24px 60px -16px rgba(16, 28, 48, 0.28), 0 0 0 1px rgba(16, 28, 48, 0.05);
+
+	/* Rail (always dark navy in light mode for a strong frame) */
+	--et-rail-bg: #142b49;
+	--et-rail-border: rgba(255, 255, 255, 0.06);
+	--et-rail-text: rgba(226, 234, 245, 0.72);
+	--et-rail-text-active: #ffffff;
+	--et-rail-hover: rgba(255, 255, 255, 0.07);
+	--et-rail-active: rgba(52, 120, 246, 0.22);
+	--et-rail-indicator: #5b95f9;
+
+	/* ---- Frappe re-map ---- */
+	--primary: var(--et-accent);
+	--primary-color: var(--et-navy);
+	--brand-color: var(--et-navy);
+	--btn-primary: var(--et-navy);
+	--border-primary: var(--et-navy);
+	--bg-color: var(--et-bg);
+	--fg-color: var(--et-surface);
+	--card-bg: var(--et-surface);
+	--navbar-bg: rgba(255, 255, 255, 0.88);
+	--modal-bg: var(--et-surface);
+	--toast-bg: var(--et-surface);
+	--popover-bg: var(--et-surface);
+	--subtle-accent: var(--et-surface-2);
+	--subtle-fg: var(--et-surface-3);
+	--fg-hover-color: var(--et-surface-hover);
+	--control-bg: var(--et-input-bg);
+	--control-bg-on-gray: var(--et-input-bg);
+	--disabled-control-bg: var(--et-input-disabled);
+	--disabled-text-color: var(--et-text-muted);
+	--awesomebar-focus-bg: var(--et-surface);
+	--awesomplete-hover-bg: var(--et-accent-soft);
+	--sidebar-select-color: var(--et-accent-soft);
+	--highlight-color: #f6f9ff;
+	--yellow-highlight-color: var(--et-warning-soft);
+	--bg-light-gray: var(--et-bg);
+	--btn-default-bg: var(--et-surface);
+	--btn-default-hover-bg: var(--et-surface-hover);
+	--text-color: var(--et-text);
+	--heading-color: var(--et-text);
+	--text-muted: var(--et-text-muted);
+	--text-light: var(--et-text-subtle);
+	--text-neutral: var(--et-text);
+	--icon-stroke: #4a5568;
+	--icon-fill-bg: var(--et-surface);
+	--border-color: var(--et-border);
+	--dark-border-color: var(--et-border-strong);
+	--table-border-color: var(--et-border);
+	--btn-group-border-color: var(--et-border-strong);
+	--scrollbar-thumb-color: #c9d1dc;
+	--scrollbar-track-color: transparent;
+	--shadow-xs: var(--et-shadow-xs);
+	--shadow-sm: var(--et-shadow-sm);
+	--shadow-base: var(--et-shadow-sm);
+	--shadow-md: var(--et-shadow-md);
+	--shadow-lg: var(--et-shadow-lg);
+	--shadow-xl: var(--et-shadow-xl);
+	--shadow-2xl: var(--et-shadow-xl);
+	--card-shadow: var(--et-shadow-sm);
+	--modal-shadow: var(--et-shadow-xl);
+	--btn-shadow: var(--et-shadow-xs);
+	--focus-default: 0 0 0 3px var(--et-accent-ring);
+	--focus-blue: 0 0 0 3px var(--et-accent-ring);
+	--checkbox-focus-shadow: 0 0 0 3px var(--et-accent-ring);
+	--checkbox-color: var(--et-accent);
+	--checkbox-gradient: linear-gradient(180deg, var(--et-accent) 0%, var(--et-accent) 100%);
+	--switch-bg: #cfd6e0;
+	--date-active-bg: var(--et-navy);
+	--date-active-text: #ffffff;
+	--date-range-bg: var(--et-accent-soft);
+	--progress-bar-bg: var(--et-accent);
+	--timeline-badge-bg: var(--et-surface-3);
+	--timeline-badge-color: var(--et-text-2);
+	--highlight-shadow: 0 0 0 3px var(--et-accent-ring), 0 0 0 1px var(--et-accent);
+	--error-bg: var(--et-danger-soft);
+	--error-border: var(--et-danger);
+
+	/* Status pill pairs used by .indicator-pill */
+	--bg-green: var(--et-success-soft);
+	--text-on-green: var(--et-success-text);
+	--bg-blue: var(--et-info-soft);
+	--text-on-blue: var(--et-info-text);
+	--bg-light-blue: var(--et-info-soft);
+	--text-on-light-blue: var(--et-info-text);
+	--bg-orange: var(--et-warning-soft);
+	--text-on-orange: var(--et-warning-text);
+	--bg-yellow: var(--et-warning-soft);
+	--text-on-yellow: var(--et-warning-text);
+	--bg-red: var(--et-danger-soft);
+	--text-on-red: var(--et-danger-text);
+	--bg-gray: var(--et-neutral-soft);
+	--text-on-gray: var(--et-neutral-text);
+	--bg-grey: var(--et-neutral-soft);
+	--text-on-grey: var(--et-neutral-text);
+	--bg-light-gray: var(--et-bg);
+	--text-on-light-gray: var(--et-neutral-text);
+	--bg-dark-gray: #dde3eb;
+	--text-on-dark-gray: #2c3747;
+	--bg-darkgrey: #dde3eb;
+	--text-on-darkgrey: #2c3747;
+
+	--alert-bg-info: var(--et-info-soft);
+	--alert-text-info: var(--et-info-text);
+	--alert-bg-success: var(--et-success-soft);
+	--alert-text-success: var(--et-success-text);
+	--alert-bg-warning: var(--et-warning-soft);
+	--alert-text-warning: var(--et-warning-text);
+	--alert-bg-danger: var(--et-danger-soft);
+	--alert-text-danger: var(--et-danger-text);
+}
+
+/* ---------- Dark ---------- */
+:root[data-theme="dark"] {
+	--et-navy: #8fb4ff;
+	--et-navy-2: #a8c4ff;
+	--et-navy-3: #c2d6ff;
+	--et-slate: #7d93b2;
+	--et-accent: #5b95f9;
+	--et-accent-hover: #74a6fb;
+	--et-accent-soft: rgba(91, 149, 249, 0.14);
+	--et-accent-soft-2: rgba(91, 149, 249, 0.24);
+	--et-accent-ring: rgba(91, 149, 249, 0.32);
+
+	--et-bg: #0c1220;
+	--et-surface: #121a2a;
+	--et-surface-2: #151e30;
+	--et-surface-3: #192335;
+	--et-surface-hover: #1a2539;
+	--et-overlay: rgba(2, 6, 14, 0.62);
+
+	--et-text: #e4e9f1;
+	--et-text-2: #c3ccd9;
+	--et-text-muted: #94a0b2;
+	--et-text-subtle: #717e92;
+	--et-text-inverse: #0c1220;
+
+	--et-border: #222c3f;
+	--et-border-strong: #2d3a51;
+	--et-divider: #1c2537;
+
+	--et-input-bg: #0f1726;
+	--et-input-border: #2a364c;
+	--et-input-border-hover: #3a4964;
+	--et-input-disabled: #141c2c;
+
+	--et-success: #34c38a;
+	--et-success-soft: rgba(52, 195, 138, 0.14);
+	--et-success-text: #5fd6a5;
+	--et-warning: #f0b45c;
+	--et-warning-soft: rgba(240, 180, 92, 0.14);
+	--et-warning-text: #f3c27a;
+	--et-danger: #ef6b6b;
+	--et-danger-soft: rgba(239, 107, 107, 0.14);
+	--et-danger-text: #f58f8f;
+	--et-info-soft: rgba(91, 149, 249, 0.14);
+	--et-info-text: #8fb4ff;
+	--et-neutral-soft: rgba(148, 160, 178, 0.14);
+	--et-neutral-text: #b3bdcc;
+
+	--et-shadow-xs: 0 1px 1px rgba(0, 0, 0, 0.3);
+	--et-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.02);
+	--et-shadow-md: 0 6px 14px -4px rgba(0, 0, 0, 0.5);
+	--et-shadow-lg: 0 14px 32px -8px rgba(0, 0, 0, 0.6);
+	--et-shadow-xl: 0 28px 64px -16px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+	--et-rail-bg: #0a1424;
+	--et-rail-border: rgba(255, 255, 255, 0.06);
+	--et-rail-text: rgba(203, 214, 230, 0.66);
+	--et-rail-text-active: #ffffff;
+	--et-rail-hover: rgba(255, 255, 255, 0.06);
+	--et-rail-active: rgba(91, 149, 249, 0.2);
+	--et-rail-indicator: #5b95f9;
+
+	--primary: var(--et-accent);
+	--primary-color: var(--et-accent);
+	--brand-color: var(--et-accent);
+	--btn-primary: var(--et-accent);
+	--border-primary: var(--et-accent);
+	--bg-color: var(--et-bg);
+	--fg-color: var(--et-surface);
+	--card-bg: var(--et-surface);
+	--navbar-bg: rgba(18, 26, 42, 0.88);
+	--modal-bg: var(--et-surface);
+	--toast-bg: var(--et-surface-3);
+	--popover-bg: var(--et-surface-3);
+	--subtle-accent: var(--et-surface-2);
+	--subtle-fg: var(--et-surface-3);
+	--fg-hover-color: var(--et-surface-hover);
+	--control-bg: var(--et-input-bg);
+	--control-bg-on-gray: var(--et-input-bg);
+	--disabled-control-bg: var(--et-input-disabled);
+	--disabled-text-color: var(--et-text-muted);
+	--awesomebar-focus-bg: var(--et-input-bg);
+	--awesomplete-hover-bg: var(--et-accent-soft);
+	--sidebar-select-color: var(--et-accent-soft);
+	--highlight-color: rgba(91, 149, 249, 0.06);
+	--yellow-highlight-color: var(--et-warning-soft);
+	--bg-light-gray: var(--et-bg);
+	--btn-default-bg: var(--et-surface-3);
+	--btn-default-hover-bg: var(--et-surface-hover);
+	--text-color: var(--et-text);
+	--heading-color: #f3f6fa;
+	--text-muted: var(--et-text-muted);
+	--text-light: var(--et-text-subtle);
+	--text-neutral: var(--et-text);
+	--icon-stroke: #b6c0cf;
+	--icon-fill-bg: var(--et-surface);
+	--border-color: var(--et-border);
+	--dark-border-color: var(--et-border-strong);
+	--table-border-color: var(--et-border);
+	--btn-group-border-color: var(--et-border-strong);
+	--scrollbar-thumb-color: #2b374d;
+	--scrollbar-track-color: transparent;
+	--shadow-xs: var(--et-shadow-xs);
+	--shadow-sm: var(--et-shadow-sm);
+	--shadow-base: var(--et-shadow-sm);
+	--shadow-md: var(--et-shadow-md);
+	--shadow-lg: var(--et-shadow-lg);
+	--shadow-xl: var(--et-shadow-xl);
+	--shadow-2xl: var(--et-shadow-xl);
+	--card-shadow: var(--et-shadow-sm);
+	--modal-shadow: var(--et-shadow-xl);
+	--btn-shadow: var(--et-shadow-xs);
+	--focus-default: 0 0 0 3px var(--et-accent-ring);
+	--focus-blue: 0 0 0 3px var(--et-accent-ring);
+	--checkbox-focus-shadow: 0 0 0 3px var(--et-accent-ring);
+	--checkbox-color: var(--et-accent);
+	--checkbox-gradient: linear-gradient(180deg, var(--et-accent) 0%, var(--et-accent) 100%);
+	--switch-bg: #2d3a51;
+	--date-active-bg: var(--et-accent);
+	--date-active-text: #0c1220;
+	--date-range-bg: var(--et-accent-soft);
+	--progress-bar-bg: var(--et-accent);
+	--timeline-badge-bg: var(--et-surface-3);
+	--timeline-badge-color: var(--et-text-2);
+	--highlight-shadow: 0 0 0 3px var(--et-accent-ring), 0 0 0 1px var(--et-accent);
+	--error-bg: var(--et-danger-soft);
+	--error-border: var(--et-danger);
+
+	--bg-green: var(--et-success-soft);
+	--text-on-green: var(--et-success-text);
+	--bg-blue: var(--et-info-soft);
+	--text-on-blue: var(--et-info-text);
+	--bg-light-blue: var(--et-info-soft);
+	--text-on-light-blue: var(--et-info-text);
+	--bg-orange: var(--et-warning-soft);
+	--text-on-orange: var(--et-warning-text);
+	--bg-yellow: var(--et-warning-soft);
+	--text-on-yellow: var(--et-warning-text);
+	--bg-red: var(--et-danger-soft);
+	--text-on-red: var(--et-danger-text);
+	--bg-gray: var(--et-neutral-soft);
+	--text-on-gray: var(--et-neutral-text);
+	--bg-grey: var(--et-neutral-soft);
+	--text-on-grey: var(--et-neutral-text);
+	--text-on-light-gray: var(--et-neutral-text);
+	--bg-dark-gray: rgba(148, 160, 178, 0.22);
+	--text-on-dark-gray: #d3dae4;
+	--bg-darkgrey: rgba(148, 160, 178, 0.22);
+	--text-on-darkgrey: #d3dae4;
+
+	--alert-bg-info: var(--et-info-soft);
+	--alert-text-info: var(--et-info-text);
+	--alert-bg-success: var(--et-success-soft);
+	--alert-text-success: var(--et-success-text);
+	--alert-bg-warning: var(--et-warning-soft);
+	--alert-text-warning: var(--et-warning-text);
+	--alert-bg-danger: var(--et-danger-soft);
+	--alert-text-danger: var(--et-danger-text);
+}

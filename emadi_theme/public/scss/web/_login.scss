@@ -1,0 +1,411 @@
+/* ==========================================================================
+   Login / Signup / Forgot password: split-screen composition
+   Markup: frappe/www/login.html (unchanged). The brand panel is added by
+   emadi_theme_web.bundle.js; without JS the form still renders centred.
+   ========================================================================== */
+
+body.et-auth,
+body[data-path="login"],
+body[data-path="update-password"] {
+	background: var(--et-surface);
+	min-height: 100vh;
+}
+
+/* Hide the website chrome on the auth screen */
+body.et-auth .navbar,
+body.et-auth nav.navbar,
+body.et-auth .web-footer,
+body.et-auth footer {
+	display: none !important;
+}
+
+body.et-auth .page-content-wrapper,
+body.et-auth main {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 !important;
+	padding: 32px 24px !important;
+}
+
+body.et-auth .page-content-wrapper > .container,
+body.et-auth main > .container,
+body.et-auth .page_content {
+	width: 100%;
+	max-width: 420px;
+	padding: 0 !important;
+	margin: 0 auto;
+	min-height: 0;
+}
+
+@media (min-width: 992px) {
+	body.et-auth {
+		padding-left: min(46vw, 640px);
+	}
+}
+
+/* ---------- Brand panel ---------- */
+.et-auth-aside {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: min(46vw, 640px);
+	display: none;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 44px 52px;
+	overflow: hidden;
+	color: #fff;
+	background: #142b49;
+}
+
+@media (min-width: 992px) {
+	.et-auth-aside {
+		display: flex;
+	}
+}
+
+/* Engineered background: fine grid, two soft lights, a thin horizon line */
+.et-auth-aside::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+	background-size: 32px 32px;
+	-webkit-mask-image: radial-gradient(ellipse at 30% 40%, #000 0%, transparent 75%);
+	mask-image: radial-gradient(ellipse at 30% 40%, #000 0%, transparent 75%);
+}
+
+.et-auth-aside::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(600px 400px at 85% 10%, rgba(52, 120, 246, 0.38), transparent 60%),
+		radial-gradient(500px 360px at 0% 100%, rgba(52, 84, 119, 0.7), transparent 60%);
+	pointer-events: none;
+}
+
+.et-auth-aside > * {
+	position: relative;
+	z-index: 1;
+}
+
+.et-auth-brand {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	font-weight: 600;
+	font-size: 15px;
+	letter-spacing: -0.01em;
+}
+
+.et-auth-brand__logo {
+	width: 38px;
+	height: 38px;
+	border-radius: 9px;
+	background: #fff;
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.et-auth-brand__logo img {
+	max-width: 28px;
+	max-height: 28px;
+}
+
+.et-auth-copy {
+	max-width: 460px;
+}
+
+.et-auth-copy__eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 5px 10px;
+	border-radius: 999px;
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	background: rgba(255, 255, 255, 0.06);
+	font-size: 12px;
+	font-weight: 500;
+	color: rgba(226, 234, 245, 0.85);
+}
+
+.et-auth-copy__eyebrow i {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: #4ade80;
+	box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
+}
+
+.et-auth-copy h2 {
+	margin: 20px 0 14px;
+	color: #fff;
+	font-size: 36px;
+	line-height: 1.15;
+	font-weight: 600;
+	letter-spacing: -0.03em;
+}
+
+.et-auth-copy p {
+	color: rgba(226, 234, 245, 0.78);
+	font-size: 15px;
+	line-height: 1.6;
+	margin: 0;
+}
+
+.et-auth-features {
+	list-style: none;
+	padding: 0;
+	margin: 32px 0 0;
+	display: grid;
+	gap: 14px;
+}
+
+.et-auth-features li {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	color: rgba(226, 234, 245, 0.9);
+	font-size: 14px;
+}
+
+.et-auth-features li span.et-tick {
+	flex-shrink: 0;
+	width: 22px;
+	height: 22px;
+	border-radius: 6px;
+	display: grid;
+	place-items: center;
+	background: rgba(52, 120, 246, 0.25);
+	border: 1px solid rgba(91, 149, 249, 0.4);
+	color: #cfe0ff;
+}
+
+.et-auth-features li strong {
+	display: block;
+	color: #fff;
+	font-weight: 600;
+}
+
+.et-auth-features li small {
+	display: block;
+	color: rgba(226, 234, 245, 0.66);
+	font-size: 13px;
+	margin-top: 1px;
+}
+
+.et-auth-foot {
+	display: flex;
+	justify-content: space-between;
+	color: rgba(226, 234, 245, 0.55);
+	font-size: 12px;
+}
+
+/* ---------- Form side ---------- */
+body.et-auth .page-card-head {
+	padding: 0 0 22px;
+	text-align: left;
+}
+
+body.et-auth .page-card-head img,
+body.et-auth .page-card-head .app-logo {
+	max-height: 40px;
+	margin-bottom: 18px;
+}
+
+@media (min-width: 992px) {
+	body.et-auth .page-card-head img,
+	body.et-auth .page-card-head .app-logo {
+		display: none;
+	}
+}
+
+body.et-auth .page-card-head h4 {
+	margin: 0;
+	font-size: 26px;
+	font-weight: 600;
+	letter-spacing: -0.025em;
+	color: var(--et-text);
+}
+
+body.et-auth .page-card-head .et-auth-sub {
+	margin-top: 6px;
+	font-weight: 400;
+	letter-spacing: 0;
+	line-height: 1.5;
+	color: var(--et-text-muted);
+	font-size: 14px;
+}
+
+body.et-auth .login-content.container,
+body.et-auth .page-card,
+body.et-auth .for-login .page-card,
+body.et-auth .for-forgot .page-card,
+body.et-auth .for-signup .page-card,
+body.et-auth .for-login-with-email-link .page-card,
+body.et-auth .for-email-login .page-card {
+	max-width: none;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	border-radius: 0;
+}
+
+body.et-auth .page-card form {
+	max-width: none;
+}
+
+body.et-auth .page-card .form-group {
+	margin-bottom: 16px;
+}
+
+body.et-auth .page-card .form-label,
+body.et-auth .page-card label {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--et-text-2);
+}
+
+body.et-auth .page-card .page-card-body input[type="text"],
+body.et-auth .page-card .page-card-body input[type="email"],
+body.et-auth .page-card .page-card-body input[type="password"],
+body.et-auth .page-card .page-card-body .form-control {
+	height: 44px;
+	margin-bottom: 0;
+	padding-left: 40px;
+	font-size: 14px;
+	color: var(--et-text);
+	background: var(--et-input-bg);
+	border: 1px solid var(--et-input-border);
+	border-radius: var(--et-r-md);
+	box-shadow: var(--et-shadow-xs);
+	transition: border-color var(--et-dur-fast) var(--et-ease), box-shadow var(--et-dur-fast) var(--et-ease);
+}
+
+body.et-auth .page-card .page-card-body input:hover {
+	border-color: var(--et-input-border-hover);
+}
+
+body.et-auth .page-card .page-card-body input:focus {
+	border-color: var(--et-accent);
+	box-shadow: 0 0 0 3px var(--et-accent-ring);
+	outline: none;
+}
+
+body.et-auth .page-card .page-card-body .field-icon {
+	top: 50% !important;
+	left: 13px !important;
+	transform: translateY(-50%);
+	--icon-stroke: var(--et-text-subtle);
+}
+
+body.et-auth .page-card .page-card-body .toggle-password {
+	top: 50% !important;
+	right: 12px !important;
+	transform: translateY(-50%);
+	color: var(--et-accent);
+	font-size: 12px;
+	font-weight: 600;
+}
+
+body.et-auth .page-card .forgot-password-message {
+	text-align: right;
+	margin-top: -4px;
+	margin-bottom: 4px;
+}
+
+body.et-auth .page-card .forgot-password-message a {
+	color: var(--et-accent);
+	font-size: 13px;
+	font-weight: 500;
+}
+
+body.et-auth .page-card .page-card-actions {
+	margin-top: 22px;
+}
+
+body.et-auth .page-card .btn-primary,
+body.et-auth .page-card .btn-login {
+	height: 44px;
+	font-size: 14px;
+	font-weight: 600;
+	border-radius: var(--et-r-md);
+	background: var(--et-navy);
+	border: 1px solid var(--et-navy);
+	color: #fff;
+	box-shadow: 0 8px 20px -10px rgba(20, 43, 73, 0.65);
+}
+
+body.et-auth .page-card .btn-primary:hover,
+body.et-auth .page-card .btn-login:hover {
+	background: #1b3860;
+	border-color: #1b3860;
+}
+
+body.et-auth .page-card .btn-primary:focus-visible {
+	box-shadow: 0 0 0 3px var(--et-accent-ring);
+}
+
+body.et-auth .login-divider {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 22px 0;
+	color: var(--et-text-subtle);
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+body.et-auth .page-card .btn-login-option,
+body.et-auth .page-card .btn-default {
+	height: 42px;
+	align-items: center;
+	background: var(--et-surface);
+	border: 1px solid var(--et-border-strong);
+	color: var(--et-text);
+	font-weight: 500;
+	border-radius: var(--et-r-md);
+	box-shadow: var(--et-shadow-xs);
+}
+
+body.et-auth .page-card .btn-login-option:hover,
+body.et-auth .page-card .btn-default:hover {
+	background: var(--et-surface-hover);
+	border-color: var(--et-input-border-hover);
+}
+
+body.et-auth .sign-up-message {
+	margin-top: 22px;
+	text-align: center;
+	color: var(--et-text-muted);
+	font-size: 13px;
+}
+
+body.et-auth .sign-up-message a {
+	color: var(--et-accent);
+	font-weight: 600;
+}
+
+body.et-auth .page-card-body.invalid input {
+	border-color: var(--et-danger);
+	box-shadow: 0 0 0 3px var(--et-danger-soft);
+}
+
+body.et-auth .for-login,
+body.et-auth .for-forgot,
+body.et-auth .for-signup,
+body.et-auth .for-login-with-email-link,
+body.et-auth .for-email-login {
+	animation: et-rise 320ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}

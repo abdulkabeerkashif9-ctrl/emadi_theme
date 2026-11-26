@@ -1,0 +1,264 @@
+/* ==========================================================================
+   In-page sidebars
+   · Workspace sidebar (.desk-sidebar)  → module tree
+   · List sidebar (.list-sidebar)       → group-by, tags, saved filters
+   · Form sidebar (.form-sidebar)       → assignments, attachments, share…
+   ========================================================================== */
+
+.layout-side-section {
+	padding-right: var(--et-sp-4);
+	font-size: var(--et-fs-sm);
+}
+
+.layout-side-section .overlay-sidebar,
+.layout-side-section .list-sidebar {
+	top: calc(var(--et-nav-h) + 72px);
+}
+
+/* Section labels */
+.standard-sidebar-label,
+.sidebar-label,
+.list-sidebar .sidebar-label,
+.form-sidebar .sidebar-label,
+.layout-side-section .sidebar-label {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: var(--et-fs-2xs) !important;
+	font-weight: var(--et-fw-semibold) !important;
+	letter-spacing: var(--et-tracking-caps);
+	text-transform: uppercase;
+	color: var(--et-text-subtle) !important;
+}
+
+.standard-sidebar-label .es-icon,
+.standard-sidebar-label .icon {
+	--icon-stroke: var(--et-text-subtle);
+}
+
+/* Workspace module tree */
+.desk-sidebar .standard-sidebar-section {
+	margin-bottom: var(--et-sp-4);
+}
+
+.desk-sidebar .sidebar-item-container {
+	margin-left: 0;
+}
+
+.desk-sidebar .standard-sidebar-item,
+.list-sidebar .standard-sidebar-item {
+	position: relative;
+	height: 36px;
+	padding: 0 10px;
+	margin-bottom: 1px;
+	border-radius: var(--et-r-md);
+	color: var(--et-text-2);
+	font-size: var(--et-fs-sm);
+	font-weight: var(--et-fw-medium);
+	transition: background-color var(--et-dur-fast) var(--et-ease), color var(--et-dur-fast) var(--et-ease);
+}
+
+.desk-sidebar .standard-sidebar-item .item-anchor {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: inherit;
+	min-width: 0;
+	flex: 1;
+}
+
+.desk-sidebar .standard-sidebar-item .sidebar-item-icon .icon,
+.desk-sidebar .standard-sidebar-item .sidebar-item-icon svg {
+	--icon-stroke: var(--et-text-muted);
+	transition: stroke var(--et-dur-fast) var(--et-ease);
+}
+
+.desk-sidebar .standard-sidebar-item:hover,
+.list-sidebar .standard-sidebar-item:hover {
+	background: var(--et-surface);
+	color: var(--et-text);
+	box-shadow: var(--et-shadow-xs);
+}
+
+.desk-sidebar .standard-sidebar-item.selected,
+.list-sidebar .standard-sidebar-item.selected {
+	background: var(--et-surface);
+	color: var(--et-text);
+	font-weight: var(--et-fw-semibold);
+	box-shadow: var(--et-shadow-sm);
+}
+
+.desk-sidebar .standard-sidebar-item.selected::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 9px;
+	bottom: 9px;
+	width: 3px;
+	border-radius: 0 3px 3px 0;
+	background: var(--et-accent);
+}
+
+.desk-sidebar .standard-sidebar-item.selected .sidebar-item-icon .icon,
+.desk-sidebar .standard-sidebar-item.selected .sidebar-item-icon svg {
+	--icon-stroke: var(--et-accent);
+}
+
+.desk-sidebar .sidebar-child-item {
+	margin-left: 14px;
+	padding-left: 8px;
+	border-left: 1px solid var(--et-border);
+}
+
+.desk-sidebar .drop-icon {
+	border-radius: var(--et-r-sm);
+}
+
+.desk-sidebar .drop-icon:hover {
+	background: var(--et-surface-hover);
+}
+
+/* List sidebar */
+.list-sidebar .sidebar-section {
+	margin-bottom: var(--et-sp-5);
+	padding: 0;
+	border: 0;
+}
+
+.list-sidebar .list-sidebar-button,
+.list-sidebar .dropdown-toggle,
+.list-sidebar .group-by-dropdown .btn,
+.list-sidebar .btn-default {
+	width: 100%;
+	justify-content: space-between;
+	height: 34px;
+	background: var(--et-surface);
+	border: 1px solid var(--et-border);
+	color: var(--et-text-2);
+	font-weight: var(--et-fw-medium);
+	box-shadow: var(--et-shadow-xs);
+}
+
+.list-sidebar .list-sidebar-button:hover,
+.list-sidebar .dropdown-toggle:hover {
+	border-color: var(--et-input-border-hover);
+	color: var(--et-text);
+}
+
+.list-sidebar .sidebar-action,
+.list-sidebar .sidebar-action a,
+.list-sidebar .show-tags,
+.list-sidebar .edit-filters {
+	color: var(--et-text-muted);
+	font-size: var(--et-fs-sm);
+	font-weight: var(--et-fw-medium);
+}
+
+.list-sidebar .sidebar-action:hover,
+.list-sidebar .sidebar-action a:hover {
+	color: var(--et-accent);
+	text-decoration: none;
+}
+
+.list-sidebar .group-by-count,
+.list-sidebar .stat-result .group-by-count {
+	color: var(--et-text-subtle);
+	font-variant-numeric: tabular-nums;
+}
+
+/* Form sidebar */
+.form-sidebar {
+	font-size: var(--et-fs-sm);
+	color: var(--et-text-2);
+}
+
+.form-sidebar .sidebar-section {
+	padding: 12px 0;
+	margin: 0;
+	border-bottom: 1px solid var(--et-border);
+}
+
+.form-sidebar .sidebar-section:last-child {
+	border-bottom: 0;
+}
+
+.form-sidebar .sidebar-image-wrapper .sidebar-image,
+.form-sidebar .sidebar-standard-image {
+	border-radius: var(--et-r-xl);
+	border: 1px solid var(--et-border);
+	box-shadow: var(--et-shadow-sm);
+}
+
+.form-sidebar .sidebar-standard-image .standard-image {
+	background: linear-gradient(135deg, var(--et-accent-soft), var(--et-surface-3));
+	color: var(--et-navy);
+	font-weight: var(--et-fw-bold);
+	letter-spacing: -0.02em;
+}
+
+.form-sidebar .sidebar-label {
+	text-transform: none !important;
+	letter-spacing: 0 !important;
+	font-size: var(--et-fs-sm) !important;
+	font-weight: var(--et-fw-medium) !important;
+	color: var(--et-text-2) !important;
+}
+
+.form-sidebar .sidebar-label .icon,
+.form-sidebar .sidebar-label .es-icon {
+	--icon-stroke: var(--et-text-muted);
+}
+
+.form-sidebar .add-assignment-btn,
+.form-sidebar .add-attachment-btn,
+.form-sidebar .add-tags-btn,
+.form-sidebar .share-doc-btn,
+.form-sidebar .btn.icon-btn {
+	width: 26px;
+	height: 26px;
+	border-radius: var(--et-r-sm);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color var(--et-dur-fast) var(--et-ease);
+}
+
+.form-sidebar .add-assignment-btn:hover,
+.form-sidebar .add-attachment-btn:hover,
+.form-sidebar .share-doc-btn:hover {
+	background: var(--et-surface);
+	box-shadow: var(--et-shadow-xs);
+}
+
+.form-sidebar .attachment-row,
+.form-sidebar .form-attachments .attachment-row {
+	padding: 6px 8px;
+	margin: 2px 0;
+	border-radius: var(--et-r-sm);
+	transition: background-color var(--et-dur-fast) var(--et-ease);
+}
+
+.form-sidebar .attachment-row:hover {
+	background: var(--et-surface);
+}
+
+.form-sidebar .attachment-row a {
+	color: var(--et-text-2);
+}
+
+.form-sidebar .modified-by,
+.form-sidebar .created-by,
+.form-sidebar .pageview-count,
+.form-sidebar .text-muted {
+	color: var(--et-text-muted) !important;
+	font-size: var(--et-fs-xs);
+	line-height: 1.5;
+}
+
+.form-sidebar .liked-by,
+.form-sidebar .form-follow {
+	color: var(--et-text-muted);
+	font-size: var(--et-fs-xs);
+	font-weight: var(--et-fw-semibold);
+	letter-spacing: var(--et-tracking-caps);
+}

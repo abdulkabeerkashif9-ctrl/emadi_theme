@@ -1,0 +1,146 @@
+/* ==========================================================================
+   Website / portal / web forms: aligned with the desk design system
+   ========================================================================== */
+
+body {
+	font-family: var(--et-font);
+	background: var(--et-bg);
+	color: var(--et-text-2);
+	-webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var(--et-text);
+	letter-spacing: -0.018em;
+}
+
+a {
+	color: var(--et-accent);
+}
+
+a:hover {
+	color: var(--et-accent-hover);
+}
+
+.navbar-light,
+.web-navbar {
+	background: rgba(255, 255, 255, 0.9) !important;
+	-webkit-backdrop-filter: saturate(160%) blur(14px);
+	backdrop-filter: saturate(160%) blur(14px);
+	border-bottom: 1px solid var(--et-border);
+}
+
+.navbar-light .navbar-nav .nav-link {
+	color: var(--et-text-2);
+	font-weight: 500;
+	font-size: 14px;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.active {
+	color: var(--et-text);
+}
+
+.btn {
+	border-radius: var(--et-r-md);
+	font-weight: 500;
+	transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.btn-primary {
+	background: var(--et-navy);
+	border-color: var(--et-navy);
+	color: #fff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled):active {
+	background: #1b3860;
+	border-color: #1b3860;
+	color: #fff;
+}
+
+.btn-default,
+.btn-light,
+.btn-secondary {
+	background: var(--et-surface);
+	border: 1px solid var(--et-border-strong);
+	color: var(--et-text);
+}
+
+.form-control {
+	background: var(--et-input-bg);
+	border: 1px solid var(--et-input-border);
+	border-radius: var(--et-r-md);
+	color: var(--et-text);
+	box-shadow: var(--et-shadow-xs);
+}
+
+.form-control:focus {
+	border-color: var(--et-accent);
+	box-shadow: 0 0 0 3px var(--et-accent-ring);
+}
+
+.control-label,
+.form-group label {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--et-text-2);
+}
+
+.web-form-wrapper .web-form,
+.web-form-container .web-form,
+.portal-container,
+.my-account-container .account-info {
+	background: var(--et-surface);
+	border: 1px solid var(--et-border);
+	border-radius: var(--et-r-xl);
+	box-shadow: var(--et-shadow-sm);
+}
+
+.web-form-wrapper .web-form {
+	padding: 32px;
+}
+
+.web-list-item,
+.portal-list-item {
+	border-bottom: 1px solid var(--et-divider);
+	transition: background-color 120ms ease;
+}
+
+.web-list-item:hover {
+	background: var(--highlight-color);
+}
+
+.dropdown-menu {
+	border: 1px solid var(--et-border);
+	border-radius: var(--et-r-lg);
+	box-shadow: var(--et-shadow-lg);
+	padding: 6px;
+}
+
+.dropdown-item {
+	border-radius: var(--et-r-sm);
+}
+
+.web-footer {
+	background: var(--et-surface);
+	border-top: 1px solid var(--et-border);
+}
+
+@keyframes et-rise {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

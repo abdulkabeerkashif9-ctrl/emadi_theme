@@ -1,0 +1,218 @@
+/* ==========================================================================
+   Child tables (frappe.ui.form.Grid)
+   Visual only: no changes to widths, scroll containers or row heights that
+   grid.js measures, so custom horizontal-scroll logic keeps working.
+   ========================================================================== */
+
+.frappe-control[data-fieldtype="Table"] > .form-group > .control-label,
+.grid-field > .control-label {
+	font-size: var(--et-fs-sm);
+	font-weight: var(--et-fw-semibold);
+	color: var(--et-text);
+	margin-bottom: 10px;
+}
+
+.form-grid-container {
+	border-radius: var(--et-r-lg);
+}
+
+.form-grid {
+	background: var(--et-surface);
+	border: 1px solid var(--et-border) !important;
+	border-radius: var(--et-r-lg) !important;
+	box-shadow: var(--et-shadow-xs);
+}
+
+/* Header */
+.form-grid .grid-heading-row {
+	background: var(--et-surface-2) !important;
+	border-bottom: 1px solid var(--et-border) !important;
+	border-radius: var(--et-r-lg) var(--et-r-lg) 0 0;
+	color: var(--et-text-muted);
+	font-size: var(--et-fs-xs);
+	font-weight: var(--et-fw-semibold);
+	letter-spacing: 0.01em;
+}
+
+.form-grid .grid-heading-row .grid-row,
+.form-grid .grid-heading-row .data-row {
+	background: transparent !important;
+}
+
+.form-grid .grid-heading-row .static-area,
+.form-grid .grid-heading-row .grid-static-col {
+	color: var(--et-text-muted);
+	font-weight: var(--et-fw-semibold);
+}
+
+.form-grid .grid-heading-row .static-area.reqd::after,
+.form-grid .grid-heading-row .grid-static-col .reqd::after {
+	color: var(--et-danger);
+}
+
+/* Body rows */
+.form-grid .grid-body .grid-row {
+	background: var(--et-surface);
+	border-bottom: 1px solid var(--et-divider) !important;
+	transition: background-color var(--et-dur-fast) var(--et-ease);
+}
+
+.form-grid .grid-body .rows .grid-row:last-child {
+	border-bottom: 0 !important;
+}
+
+.form-grid .grid-body .grid-row:hover,
+.form-grid .grid-body .grid-row:hover .data-row,
+.form-grid .grid-body .grid-row:hover .grid-static-col {
+	background: var(--highlight-color);
+}
+
+.form-grid .grid-row .data-row {
+	font-size: var(--et-fs-sm);
+	color: var(--et-text);
+}
+
+.form-grid .grid-static-col,
+.form-grid .row-index,
+.form-grid .row-check {
+	border-color: var(--et-divider) !important;
+}
+
+.form-grid .row-index,
+.form-grid .row-index span {
+	color: var(--et-text-subtle);
+	font-variant-numeric: tabular-nums;
+	font-size: var(--et-fs-xs);
+}
+
+.form-grid .grid-static-col[data-fieldtype="Currency"],
+.form-grid .grid-static-col[data-fieldtype="Float"],
+.form-grid .grid-static-col[data-fieldtype="Int"],
+.form-grid .grid-static-col[data-fieldtype="Percent"] {
+	font-variant-numeric: tabular-nums;
+}
+
+/* Editable cells: inputs blend into the cell, ring on focus */
+.form-grid .grid-row .editable-row .form-control,
+.form-grid .grid-row .grid-static-col .form-control,
+.form-grid .editable-row .frappe-control .form-control {
+	height: 100%;
+	min-height: 36px;
+	background: transparent;
+	border: 0 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	font-size: var(--et-fs-sm);
+}
+
+.form-grid .grid-row .editable-row .form-control:focus,
+.form-grid .editable-row .frappe-control .form-control:focus {
+	background: var(--et-input-bg);
+	box-shadow: inset 0 0 0 2px var(--et-accent) !important;
+}
+
+.form-grid .editable-row .frappe-control {
+	margin-bottom: 0;
+}
+
+/* Selected rows */
+.form-grid .grid-row:has(.grid-row-check:checked),
+.form-grid .grid-row:has(.grid-row-check:checked) .data-row,
+.form-grid .grid-row:has(.grid-row-check:checked) .grid-static-col {
+	background: var(--et-accent-soft) !important;
+}
+
+/* Row open (edit full row) button */
+.form-grid .btn-open-row {
+	border-radius: var(--et-r-sm);
+	--icon-stroke: var(--et-text-muted);
+}
+
+.form-grid .btn-open-row:hover {
+	background: var(--et-surface-hover);
+	--icon-stroke: var(--et-accent);
+}
+
+/* Empty */
+.form-grid .grid-empty {
+	padding: 28px 0;
+	color: var(--et-text-subtle);
+	font-size: var(--et-fs-sm);
+}
+
+/* Footer actions */
+.grid-footer {
+	margin-top: 10px;
+	padding: 0 !important;
+	background: transparent !important;
+}
+
+.grid-footer .grid-buttons {
+	gap: 6px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.grid-footer .grid-add-row,
+.grid-footer .grid-add-multiple-rows {
+	border-style: dashed !important;
+	border-color: var(--et-border-strong) !important;
+	color: var(--et-text-2);
+	background: transparent !important;
+	box-shadow: none !important;
+}
+
+.grid-footer .grid-add-row:hover,
+.grid-footer .grid-add-multiple-rows:hover {
+	border-color: var(--et-accent) !important;
+	color: var(--et-accent);
+	background: var(--et-accent-soft) !important;
+}
+
+.grid-footer .grid-remove-rows,
+.grid-footer .grid-remove-all-rows {
+	background: var(--et-danger-soft) !important;
+	border-color: transparent !important;
+	color: var(--et-danger-text) !important;
+}
+
+.grid-footer .grid-remove-rows:hover,
+.grid-footer .grid-remove-all-rows:hover {
+	background: var(--et-danger) !important;
+	color: #fff !important;
+}
+
+.grid-footer .grid-pagination .btn {
+	height: 26px;
+}
+
+/* Expanded row editor */
+.grid-row-open {
+	border: 1px solid var(--et-accent-soft-2) !important;
+	border-radius: var(--et-r-lg);
+	box-shadow: var(--et-shadow-lg);
+	background: var(--et-surface);
+}
+
+.grid-row-open .grid-form-heading {
+	background: var(--et-surface-2);
+	border-bottom: 1px solid var(--et-border);
+	padding: 10px 14px;
+}
+
+.grid-row-open .grid-form-heading .panel-title {
+	font-weight: var(--et-fw-semibold);
+	color: var(--et-text);
+}
+
+.grid-form-body .form-area {
+	padding: var(--et-sp-4);
+}
+
+/* Horizontal scrolling on narrow screens */
+@media (max-width: 767.98px) {
+	.form-grid-container {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+}

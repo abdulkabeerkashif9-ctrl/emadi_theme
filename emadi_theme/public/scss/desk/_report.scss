@@ -1,0 +1,255 @@
+/* ==========================================================================
+   Reports (query / script / report builder) + datatable + summary cards
+   ========================================================================== */
+
+.report-wrapper,
+.layout-main-section .report-wrapper {
+	padding: 0 !important;
+}
+
+/* Filters bar on query reports reuses .page-form (see _list.scss) */
+.query-report .page-form,
+.page-form.flex {
+	gap: 10px;
+}
+
+.page-form .frappe-control[data-fieldtype="Date Range"] input,
+.page-form .frappe-control[data-fieldtype="Date"] input {
+	min-width: 140px;
+}
+
+/* Summary cards above report */
+.report-summary {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	padding: var(--et-sp-4) !important;
+	margin: 0 !important;
+	background: var(--et-surface-2);
+	border-bottom: 1px solid var(--et-border);
+}
+
+.report-summary .summary-item {
+	flex: 1 1 180px;
+	min-width: 160px;
+	margin: 0 !important;
+	padding: 14px 16px;
+	background: var(--et-surface);
+	border: 1px solid var(--et-border);
+	border-radius: var(--et-r-lg);
+	box-shadow: var(--et-shadow-xs);
+	text-align: left;
+}
+
+.report-summary .summary-label {
+	font-size: var(--et-fs-2xs);
+	font-weight: var(--et-fw-semibold);
+	letter-spacing: var(--et-tracking-caps);
+	text-transform: uppercase;
+	color: var(--et-text-muted);
+}
+
+.report-summary .summary-value {
+	font-size: var(--et-fs-xl);
+	font-weight: var(--et-fw-semibold);
+	letter-spacing: -0.02em;
+	color: var(--et-text);
+	font-variant-numeric: tabular-nums;
+}
+
+.report-summary .summary-value.green {
+	color: var(--et-success);
+}
+
+.report-summary .summary-value.red {
+	color: var(--et-danger);
+}
+
+.report-summary .summary-separator {
+	color: var(--et-text-subtle);
+}
+
+/* Chart area */
+.chart-wrapper,
+.report-wrapper .chart-wrapper {
+	padding: var(--et-sp-4) var(--et-sp-5);
+	border-bottom: 1px solid var(--et-border);
+	background: var(--et-surface);
+}
+
+/* Report footer / messages */
+.report-footer,
+.query-report .report-footer {
+	padding: 10px 14px;
+	color: var(--et-text-muted);
+	font-size: var(--et-fs-xs);
+	border-top: 1px solid var(--et-border);
+	background: var(--et-surface-2);
+}
+
+/* ---------- Frappe DataTable ---------- */
+.datatable,
+.dt-scrollable,
+.dt-header {
+	font-family: var(--et-font);
+	font-size: var(--et-fs-sm);
+	color: var(--et-text-2);
+}
+
+.datatable {
+	--dt-border-color: var(--et-border);
+	--dt-light-bg: var(--et-surface-2);
+	--dt-selection-highlight-color: var(--et-accent-soft);
+	--dt-focus-border-width: 2px;
+	--dt-primary-color: var(--et-accent);
+	--dt-cell-bg: var(--et-surface);
+	--dt-text-color: var(--et-text-2);
+	--dt-text-light: var(--et-text-muted);
+	--dt-spacer-1: 4px;
+	--dt-spacer-2: 8px;
+	--dt-spacer-3: 12px;
+	--dt-border-radius: var(--et-r-md);
+	--dt-header-cell-bg: var(--et-surface-2);
+	border: 0;
+}
+
+.dt-cell {
+	background: var(--et-surface);
+	border-color: var(--et-divider) !important;
+	color: var(--et-text-2);
+}
+
+.dt-cell__content {
+	padding: 8px 12px;
+	font-variant-numeric: tabular-nums;
+}
+
+.dt-cell--header,
+.dt-header .dt-cell,
+.dt-row-header .dt-cell {
+	background: var(--et-surface-2) !important;
+	color: var(--et-text-muted);
+	font-size: var(--et-fs-xs);
+	font-weight: var(--et-fw-semibold);
+	letter-spacing: 0.01em;
+	border-bottom: 1px solid var(--et-border) !important;
+}
+
+.dt-cell--header .dt-cell__content {
+	padding: 10px 12px;
+}
+
+.dt-row-filter .dt-cell,
+.dt-row-filter .dt-filter {
+	background: var(--et-surface) !important;
+}
+
+.dt-filter {
+	height: 28px;
+	border-radius: var(--et-r-sm);
+	border: 1px solid var(--et-input-border);
+	background: var(--et-input-bg);
+	color: var(--et-text);
+	font-size: var(--et-fs-xs);
+}
+
+.dt-filter:focus {
+	border-color: var(--et-accent);
+	box-shadow: 0 0 0 3px var(--et-accent-ring);
+	outline: none;
+}
+
+.dt-row:hover .dt-cell,
+.dt-row--highlight .dt-cell {
+	background: var(--highlight-color);
+}
+
+.dt-row--checked .dt-cell,
+.dt-cell--highlight {
+	background: var(--et-accent-soft) !important;
+}
+
+.dt-cell--focus {
+	box-shadow: inset 0 0 0 2px var(--et-accent);
+}
+
+.dt-cell--col-0,
+.dt-cell--col-0 .dt-cell__content {
+	color: var(--et-text-subtle);
+	font-size: var(--et-fs-xs);
+}
+
+.dt-cell__content a {
+	color: var(--et-text);
+	font-weight: var(--et-fw-medium);
+}
+
+.dt-cell__content a:hover {
+	color: var(--et-accent);
+}
+
+/* Group-by / tree rows */
+.dt-tree-node__toggle {
+	--icon-stroke: var(--et-text-muted);
+}
+
+.dt-row[data-row-index] .dt-cell[data-is-group="1"],
+.dt-cell .bold,
+.dt-cell b,
+.dt-cell strong {
+	color: var(--et-text);
+	font-weight: var(--et-fw-semibold);
+}
+
+/* Total row */
+.dt-footer .dt-cell,
+.dt-row-totalRow .dt-cell,
+.dt-row.dt-row-totalRow .dt-cell {
+	background: var(--et-surface-3) !important;
+	color: var(--et-text);
+	font-weight: var(--et-fw-semibold);
+	border-top: 1px solid var(--et-border-strong) !important;
+}
+
+/* Column dropdown */
+.dt-dropdown__toggle {
+	border-radius: var(--et-r-xs);
+}
+
+.dt-dropdown__list {
+	background: var(--popover-bg);
+	border: 1px solid var(--et-border);
+	border-radius: var(--et-r-lg);
+	box-shadow: var(--et-shadow-lg);
+	padding: 4px;
+}
+
+.dt-dropdown__list-item {
+	border-radius: var(--et-r-sm);
+	padding: 6px 10px;
+	color: var(--et-text);
+}
+
+.dt-dropdown__list-item:hover {
+	background: var(--et-surface-hover);
+}
+
+.dt-paste-target,
+.dt-toast__message {
+	background: var(--et-navy);
+	color: #fff;
+	border-radius: var(--et-r-md);
+}
+
+/* Report view (Report Builder) group-by & column pickers */
+.report-view .group-by-selector,
+.group-by-area {
+	border-bottom: 1px solid var(--et-border);
+	padding: 10px 14px;
+}
+
+/* Dashboard view (Dashboard doctype) */
+.dashboard-view .dashboard-graph,
+.dashboard-graph .widget {
+	border-radius: var(--et-r-xl);
+}

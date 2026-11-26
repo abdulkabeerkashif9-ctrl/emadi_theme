@@ -1,0 +1,195 @@
+/* ==========================================================================
+   Page shell: page head, title, actions, side section, main section
+   Markup: frappe/public/js/frappe/ui/page.html
+   ========================================================================== */
+
+.page-head {
+	background: transparent;
+	border-bottom: 0;
+	top: var(--et-nav-h);
+	transition: background-color var(--et-dur) var(--et-ease), box-shadow var(--et-dur) var(--et-ease);
+}
+
+.page-head .page-head-content {
+	height: auto;
+	min-height: 72px;
+	padding-top: 14px;
+	padding-bottom: 10px;
+}
+
+/* When page scrolls Frappe adds .drop-shadow → frosted bar */
+.page-head.drop-shadow {
+	background: var(--navbar-bg);
+	-webkit-backdrop-filter: saturate(160%) blur(14px);
+	backdrop-filter: saturate(160%) blur(14px);
+	box-shadow: 0 1px 0 var(--et-border);
+}
+
+.page-head.drop-shadow .page-head-content {
+	min-height: 60px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.page-title {
+	gap: 8px;
+}
+
+.page-title .title-area .title-text,
+.page-head .title-text {
+	font-size: var(--et-fs-2xl);
+	font-weight: var(--et-fw-semibold);
+	letter-spacing: -0.022em;
+	color: var(--et-text);
+	line-height: 1.2;
+}
+
+.page-head.drop-shadow .title-text {
+	font-size: var(--et-fs-xl);
+}
+
+.page-title .title-area .indicator-pill {
+	margin-left: 12px;
+	align-self: center;
+}
+
+.page-title .sub-heading {
+	font-size: var(--et-fs-sm);
+	color: var(--et-text-muted);
+	margin-top: 2px;
+}
+
+.page-title .sidebar-toggle-btn {
+	width: 34px;
+	height: 34px;
+	border-radius: var(--et-r-md);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 6px;
+	color: var(--et-text-muted);
+	--icon-stroke: currentColor;
+	transition: background-color var(--et-dur-fast) var(--et-ease);
+}
+
+.page-title .sidebar-toggle-btn:hover {
+	background: var(--et-surface);
+	box-shadow: var(--et-shadow-sm);
+	color: var(--et-text);
+}
+
+/* Actions */
+.page-actions {
+	gap: 8px;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.page-actions .custom-actions,
+.page-actions .standard-actions {
+	gap: 8px;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+
+.page-actions .btn,
+.page-actions .custom-actions .btn,
+.page-actions .standard-actions .btn {
+	margin: 0 !important;
+}
+
+.page-actions .page-icon-group {
+	display: inline-flex;
+	gap: 6px;
+}
+
+/* Body */
+.page-body {
+	padding-bottom: var(--et-sp-10);
+}
+
+.layout-main {
+	margin-top: 4px;
+}
+
+.layout-main-section-wrapper {
+	min-width: 0;
+}
+
+.layout-main-section {
+	min-width: 0;
+}
+
+/* Generic white "sheet" used by list, report, page views */
+.layout-main-section.frappe-card,
+.frappe-card {
+	background: var(--et-surface);
+	border: 1px solid var(--et-border);
+	border-radius: var(--et-r-xl);
+	box-shadow: var(--et-shadow-sm);
+}
+
+.layout-main-section.frappe-card {
+	/* clip (not hidden) keeps position: sticky working for list headers */
+	overflow: clip;
+}
+
+/* Page-level toolbar and empty states */
+.page-toolbar {
+	border-bottom: 1px solid var(--et-border);
+}
+
+.no-result,
+.msg-box {
+	color: var(--et-text-muted);
+}
+
+.msg-box .null-state,
+.no-result .null-state {
+	opacity: 0.85;
+	filter: saturate(0.6);
+}
+
+.msg-box p,
+.no-result p {
+	color: var(--et-text-muted);
+	font-size: var(--et-fs-base);
+}
+
+/* Loading skeletons */
+.skeleton-bg,
+.widget-skeleton .skeleton-card,
+.list-skeleton .skeleton-row,
+[class*="skeleton"] .skeleton-bg {
+	background: linear-gradient(90deg, var(--et-surface-3) 0%, var(--et-surface-hover) 40%, var(--et-surface-3) 80%);
+	background-size: 800px 100%;
+	animation: et-shimmer 1.4s linear infinite;
+}
+
+/* Frappe "freeze" overlay */
+.freeze-message-container {
+	background: var(--et-overlay);
+	-webkit-backdrop-filter: blur(2px);
+	backdrop-filter: blur(2px);
+}
+
+.freeze-message-container .freeze-message {
+	color: #fff;
+	font-weight: var(--et-fw-medium);
+}
+
+/* Progress bar (top route loader & progress dialogs) */
+.progress {
+	height: 6px;
+	background: var(--et-surface-3);
+	border-radius: var(--et-r-full);
+	box-shadow: none;
+	overflow: hidden;
+}
+
+.progress-bar {
+	background: var(--et-accent);
+	border-radius: var(--et-r-full);
+	transition: width var(--et-dur-slow) var(--et-ease);
+}

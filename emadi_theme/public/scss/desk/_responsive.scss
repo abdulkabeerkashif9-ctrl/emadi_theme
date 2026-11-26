@@ -1,0 +1,124 @@
+/* ==========================================================================
+   Responsive adaptations + small fixes
+   ========================================================================== */
+
+/* Link-style buttons size to content */
+.btn.btn-link,
+.btn-reset {
+	height: auto;
+}
+
+.btn.btn-link {
+	padding: 0 4px;
+	box-shadow: none !important;
+}
+
+/* Laptops */
+@media (max-width: 1279.98px) {
+	.layout-side-section {
+		padding-right: var(--et-sp-3);
+	}
+
+	.form-section,
+	.form-section.card-section,
+	.form-dashboard-section {
+		padding: var(--et-sp-4) var(--et-sp-5) !important;
+	}
+}
+
+/* Tablets */
+@media (max-width: 991.98px) {
+	.page-head .page-head-content {
+		min-height: 60px;
+	}
+
+	.page-title .title-area .title-text,
+	.page-head .title-text {
+		font-size: var(--et-fs-xl);
+	}
+
+	.navbar .search-bar {
+		max-width: none;
+	}
+
+	.navbar .search-bar .et-kbd-hint {
+		display: none;
+	}
+
+	.navbar .search-bar input#navbar-search,
+	.navbar .search-bar input {
+		padding-right: 12px !important;
+	}
+
+	/* Frappe's overlay sidebar (mobile) */
+	.overlay-sidebar.opened,
+	.layout-side-section .overlay-sidebar.opened {
+		background: var(--et-surface) !important;
+		box-shadow: var(--et-shadow-xl);
+		border-right: 1px solid var(--et-border);
+		padding: var(--et-sp-4);
+	}
+
+	.list-row-head,
+	.frappe-list .list-row-head,
+	.form-tabs-list {
+		top: var(--et-nav-h);
+	}
+}
+
+/* Phones */
+@media (max-width: 767.98px) {
+	body {
+		font-size: var(--et-fs-sm);
+	}
+
+	.page-head .page-head-content {
+		padding-top: 10px;
+		padding-bottom: 8px;
+	}
+
+	.page-actions .btn {
+		height: 32px;
+	}
+
+	.form-section,
+	.form-section.card-section,
+	.form-dashboard-section {
+		padding: var(--et-sp-4) !important;
+	}
+
+	.form-tabs-list {
+		padding: 0 var(--et-sp-2) !important;
+	}
+
+	.layout-main-section .form-page,
+	.layout-main-section.frappe-card,
+	.frappe-card {
+		border-radius: var(--et-r-lg);
+	}
+
+	.frappe-list .list-row {
+		min-height: 52px;
+	}
+
+	.modal-dialog {
+		margin: 12px;
+	}
+
+	.modal-content {
+		border-radius: var(--et-r-lg);
+	}
+
+	.dropdown-notifications .notifications-list {
+		width: calc(100vw - 24px);
+	}
+
+	.desk-alert {
+		min-width: 0;
+		width: calc(100vw - 24px);
+	}
+
+	.widget {
+		padding: 14px;
+	}
+}
