@@ -1,14 +1,76 @@
-// Persistent application rail built from frappe.boot.allowed_workspaces.
-// Navigation goes through frappe.set_route, so permissions, routing hooks and
-// keyboard shortcuts behave exactly as with Frappe's own sidebar.
+// Karkhana-style sidebar built from frappe.boot.allowed_workspaces.
+// Workspaces are grouped (Overview, Business, Operations, Finance, People,
+// Administration) by name; anything unknown goes under "Modules".
+// Navigation uses frappe.set_route, so permissions and routing are Frappe's.
 
-import { icons } from "./icons";
+import { icon, LOGO } from "./lucide";
+import { BRAND, initials } from "./brand";
 
-const EXPANDED_KEY = "et_rail_expanded";
+const COLLAPSED_KEY = "et_rail_collapsed";
 const LAST_WS_KEY = "et_rail_last_workspace";
 
 const slug = (s) => frappe.router.slug(s || "");
 const esc = (s) => frappe.utils.escape_html(String(s ?? ""));
+
+const GROUPS = [
+	["overview", "Overview"],
+	["business", "Business"],
+	["operations", "Operations"],
+	["modules", "Modules"],
+	["finance", "Finance"],
+	["people", "People"],
+	["analytics", "Analytics"],
+	["admin", "Administration"],
+];
+
+// exact workspace name → [group, icon]
+const KNOWN = {
+	home: ["overview", "layout-dashboard"],
+	selling: ["business", "trending-up"],
+	crm: ["business", "target"],
+	buying: ["business", "shopping-cart"],
+	stock: ["operations", "boxes"],
+	manufacturing: ["operations", "factory"],
+	subcontracting: ["operations", "truck"],
+	projects: ["operations", "folder-kanban"],
+	quality: ["operations", "shield-check"],
+	assets: ["operations", "building-complex"],
+	support: ["operations", "headset"],
+	accounting: ["finance", "book-open"],
+	payables: ["finance", "receipt-text"],
+	receivables: ["finance", "credit-card"],
+	"financial-reports": ["finance", "file-spreadsheet"],
+	banking: ["finance", "landmark"],
+	hr: ["people", "contact"],
+	"human-resources": ["people", "contact"],
+	payroll: ["people", "wallet"],
+	"leaves": ["people", "plane"],
+	attendance: ["people", "calendar-check"],
+	"insights": ["analytics", "chart-line"],
+	users: ["admin", "user-cog"],
+	tools: ["admin", "wrench"],
+	website: ["admin", "globe"],
+	build: ["admin", "blocks"],
+	integrations: ["admin", "workflow"],
+	"erpnext-integrations": ["admin", "workflow"],
+	"erpnext-settings": ["admin", "settings-2"],
+	settings: ["admin", "settings-2"],
+};
+
+// keyword fallbacks for custom workspaces
+const KEYWORDS = [
+	[/dye|chemical|lab/i, "flask-conical"],
+	[/weav|sizing|loom|stitch|hemm|cut|production|knit|spin|factory|mill/i, "factory"],
+	[/sale|order|quotation/i, "trending-up"],
+	[/purchas|procure|buy|supplier/i, "shopping-cart"],
+	[/stock|inventory|warehouse|store/i, "boxes"],
+	[/account|ledger|finance|invoice/i, "book-open"],
+	[/payment|bank|cash/i, "credit-card"],
+	[/report|analytic|insight/i, "files"],
+	[/employee|hr|staff|people/i, "contact"],
+	[/setting|setup|config/i, "settings-2"],
+	[/cost/i, "receipt-text"],
+];
 
 function storage_get(store, key) {
 	try {
@@ -28,163 +90,171 @@ function storage_set(store, key, value) {
 
 export class Rail {
 	constructor() {
-		this.workspaces = this.get_workspaces();
-		if (!this.workspaces.public.length && !this.workspaces.private.length) return;
-
+		this.items = this.get_items();
+		if (!this.items.length) return;
 		this.render();
 		this.bind();
-		this.restore_state();
+		this.set_collapsed(storage_get(localStorage, COLLAPSED_KEY) === "1", true);
 		this.update_active();
 	}
 
-	get_workspaces() {
+	get_items() {
 		const all = (frappe.boot.allowed_workspaces || []).filter(
 			(w) => w && w.name && !w.parent_page && !cint(w.is_hidden)
 		);
 		const is_public = (w) => w.public === undefined || cint(w.public) === 1;
-		const to_item = (w) => ({
-			name: w.name,
-			title: w.title || w.name,
-			icon: w.icon,
-			module: w.module,
-			route: slug(is_public(w) ? w.name : "private/" + w.name),
-			key: slug(w.name),
+		return all.map((w) => {
+			const key = slug(w.name);
+			let [group, ic] = KNOWN[key] || [];
+			if (!group) {
+				group = is_public(w) ? "modules" : "modules";
+				const kw = KEYWORDS.find(([re]) => re.test(w.name));
+				ic = kw ? kw[1] : "folder";
+			}
+			return {
+				name: w.name,
+				title: w.title || w.name,
+				module: w.module,
+				group,
+				icon: ic,
+				key,
+				route: slug(is_public(w) ? w.name : "private/" + w.name),
+			};
 		});
-		return {
-			public: all.filter(is_public).map(to_item),
-			private: all.filter((w) => !is_public(w)).map(to_item),
-		};
-	}
-
-	icon_html(item) {
-		try {
-			if (item.icon) return frappe.utils.icon(item.icon, "md");
-		} catch (e) {
-			/* fall through */
-		}
-		return icons.folder(20);
 	}
 
 	item_html(item) {
 		const label = esc(__(item.title));
-		return `
-			<a class="et-rail__item" href="/app/${esc(item.route)}" data-route="${esc(item.route)}"
-				data-key="${esc(item.key)}" data-label="${label}" aria-label="${label}">
-				<span class="et-rail__icon">${this.icon_html(item)}</span>
-				<span class="et-rail__label">${label}</span>
-			</a>`;
+		return `<a class="et-rail__item" href="/app/${esc(item.route)}" data-route="${esc(
+			item.route
+		)}" data-key="${esc(item.key)}" data-label="${label}">
+			<span class="et-rail__icon">${icon(item.icon, 16, 1.6)}</span>
+			<span class="et-rail__label">${label}</span>
+		</a>`;
 	}
 
-	brand() {
-		const logo = frappe.boot.app_logo_url;
-		const name =
+	user_info() {
+		const user = frappe.session.user;
+		const info = (frappe.user_info && frappe.user_info(user)) || {};
+		const name = info.fullname || (frappe.boot.user && frappe.boot.user.first_name) || user;
+		const company =
 			(frappe.boot.sysdefaults && frappe.boot.sysdefaults.company) ||
-			frappe.boot.app_name ||
-			__("Workspace");
-		return { logo, name };
+			(frappe.boot.user && frappe.boot.user.email) ||
+			"";
+		return { name, company, image: info.image, abbr: info.abbr || initials(name) };
 	}
 
 	render() {
-		const { logo, name } = this.brand();
-		const pub = this.workspaces.public.map((w) => this.item_html(w)).join("");
-		const priv = this.workspaces.private.map((w) => this.item_html(w)).join("");
+		const groups = GROUPS.map(([id, label]) => {
+			const items = this.items.filter((i) => i.group === id);
+			if (!items.length) return "";
+			return `<div class="et-rail__group">
+				<div class="et-rail__group-label">${esc(__(label))}</div>
+				${items.map((i) => this.item_html(i)).join("")}
+			</div>`;
+		}).join("");
 
+		const u = this.user_info();
 		this.$rail = $(`
 			<nav class="et-rail" aria-label="${esc(__("Main navigation"))}">
-				<a class="et-rail__brand" href="/app" aria-label="${esc(__("Home"))}">
-					<span class="et-rail__logo">${
-						logo ? `<img src="${esc(logo)}" alt="">` : icons.home(18)
-					}</span>
-					<span class="et-rail__brand-text">
-						<span class="et-rail__brand-name">${esc(name)}</span>
-						<span class="et-rail__brand-sub">${esc(__("ERP Suite"))}</span>
-					</span>
-				</a>
-				<div class="et-rail__scroll">
-					<div class="et-rail__group-label">${esc(__("Modules"))}</div>
-					${pub}
-					${
-						priv
-							? `<div class="et-rail__group-label">${esc(__("My Workspaces"))}</div>${priv}`
-							: ""
-					}
+				<div class="et-rail__brand-row">
+					<a class="et-rail__brand" href="/app" aria-label="${esc(BRAND.NAME)}">
+						${LOGO}
+						<span class="et-rail__brand-name">${esc(BRAND.NAME)}</span>
+					</a>
+					<button type="button" class="et-rail__collapse" aria-label="${esc(
+						__("Collapse sidebar")
+					)}">${icon("panel-left-close", 16, 1.6)}</button>
 				</div>
+				<div class="et-rail__scroll">${groups}</div>
 				<div class="et-rail__footer">
-					<button type="button" class="et-rail__item et-rail__theme" data-label="${esc(
-						__("Switch Theme")
-					)}">
-						<span class="et-rail__icon">${icons.moon(20)}</span>
-						<span class="et-rail__label">${esc(__("Appearance"))}</span>
-					</button>
-					<button type="button" class="et-rail__item et-rail__toggle" data-label="${esc(
-						__("Expand")
-					)}" aria-expanded="false">
-						<span class="et-rail__icon">${icons.chevrons(20)}</span>
-						<span class="et-rail__label">${esc(__("Collapse"))}</span>
+					<div class="et-rail__menu" role="menu">
+						<button type="button" data-action="settings">${icon("user", 15)} ${esc(
+			__("My Settings")
+		)}</button>
+						<button type="button" data-action="theme">${icon("moon", 15)} ${esc(
+			__("Toggle theme")
+		)}</button>
+						<hr>
+						<button type="button" data-action="logout">${icon("log-out", 15)} ${esc(
+			__("Log out")
+		)}</button>
+					</div>
+					<button type="button" class="et-rail__user" aria-haspopup="menu" aria-expanded="false">
+						<span class="et-rail__avatar">${
+							u.image ? `<img src="${esc(u.image)}" alt="">` : esc(u.abbr)
+						}</span>
+						<span class="et-rail__user-text">
+							<span class="et-rail__user-name">${esc(u.name)}</span>
+							<span class="et-rail__user-sub">${esc(u.company)}</span>
+						</span>
+						${icon("chevrons-up-down", 14, 1.6)}
 					</button>
 				</div>
-			</nav>
-		`);
+			</nav>`);
 
 		this.$backdrop = $(`<div class="et-rail-backdrop" aria-hidden="true"></div>`);
 		$("body").append(this.$rail, this.$backdrop).addClass("et-has-rail");
 
-		// Mobile opener in the navbar
 		const $nav_container = $(".navbar > .container").first();
 		if ($nav_container.length && !$nav_container.find(".et-rail-mobile-btn").length) {
 			this.$mobile_btn = $(
 				`<button type="button" class="et-rail-mobile-btn" aria-label="${esc(
 					__("Open navigation")
-				)}">${icons.menu(20)}</button>`
+				)}">${icon("menu", 18, 1.8)}</button>`
 			).prependTo($nav_container);
 		}
 	}
 
 	bind() {
 		this.$rail.on("click", ".et-rail__item[data-route]", (e) => {
-			// Let the browser handle new-tab / middle clicks
 			if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
 			e.preventDefault();
-			const route = $(e.currentTarget).attr("data-route");
-			frappe.set_route(route);
+			frappe.set_route($(e.currentTarget).attr("data-route"));
 			this.close_drawer();
 		});
 
-		this.$rail.on("click", ".et-rail__toggle", () => this.toggle_expanded());
+		this.$rail.on("click", ".et-rail__collapse", () =>
+			this.set_collapsed(!$("body").hasClass("et-rail-collapsed"))
+		);
 
-		this.$rail.on("click", ".et-rail__theme", () => {
-			if (frappe.ui.ThemeSwitcher) {
-				new frappe.ui.ThemeSwitcher().show();
-			}
+		const $menu = this.$rail.find(".et-rail__menu");
+		const $user = this.$rail.find(".et-rail__user");
+		$user.on("click", (e) => {
+			e.stopPropagation();
+			const open = !$menu.hasClass("is-open");
+			$menu.toggleClass("is-open", open);
+			$user.attr("aria-expanded", open ? "true" : "false");
+		});
+		$(document).on("click.et-rail", () => {
+			$menu.removeClass("is-open");
+			$user.attr("aria-expanded", "false");
+		});
+		$menu.on("click", "[data-action]", (e) => {
+			const action = $(e.currentTarget).attr("data-action");
+			if (action === "settings") frappe.set_route("Form", "User", frappe.session.user);
+			if (action === "theme") emadi_theme.toggle_theme && emadi_theme.toggle_theme();
+			if (action === "logout") frappe.app.logout();
 			this.close_drawer();
 		});
 
 		this.$backdrop.on("click", () => this.close_drawer());
 		this.$mobile_btn && this.$mobile_btn.on("click", () => this.open_drawer());
-
 		$(document).on("keydown.et-rail", (e) => {
-			if (e.key === "Escape" && $("body").hasClass("et-rail-open")) this.close_drawer();
+			if (e.key === "Escape") {
+				this.close_drawer();
+				$menu.removeClass("is-open");
+			}
 		});
 	}
 
-	restore_state() {
-		const expanded = storage_get(localStorage, EXPANDED_KEY) === "1";
-		this.set_expanded(expanded);
-	}
-
-	set_expanded(expanded) {
-		$("body").toggleClass("et-rail-expanded", expanded);
+	set_collapsed(collapsed, initial) {
+		$("body").toggleClass("et-rail-collapsed", collapsed);
 		this.$rail
-			.find(".et-rail__toggle")
-			.attr("aria-expanded", expanded ? "true" : "false")
-			.attr("data-label", expanded ? __("Collapse") : __("Expand"));
-		storage_set(localStorage, EXPANDED_KEY, expanded ? "1" : "0");
-		// Datatables / charts measure their container: let them re-layout
-		setTimeout(() => window.dispatchEvent(new Event("resize")), 280);
-	}
-
-	toggle_expanded() {
-		this.set_expanded(!$("body").hasClass("et-rail-expanded"));
+			.find(".et-rail__collapse")
+			.attr("aria-label", collapsed ? __("Expand sidebar") : __("Collapse sidebar"));
+		storage_set(localStorage, COLLAPSED_KEY, collapsed ? "1" : "0");
+		if (!initial) setTimeout(() => window.dispatchEvent(new Event("resize")), 260);
 	}
 
 	open_drawer() {
@@ -196,26 +266,25 @@ export class Rail {
 	}
 
 	find_by_key(key) {
-		return [...this.workspaces.public, ...this.workspaces.private].find((w) => w.key === key);
+		return this.items.find((w) => w.key === key);
 	}
 
 	find_by_module(module) {
 		if (!module) return null;
-		const all = [...this.workspaces.public, ...this.workspaces.private];
-		return all.find((w) => w.module === module) || all.find((w) => w.title === module) || null;
+		return (
+			this.items.find((w) => w.module === module) ||
+			this.items.find((w) => w.title === module) ||
+			null
+		);
 	}
 
 	resolve_active_key() {
 		const route = frappe.get_route() || [];
-
 		if (route[0] === "Workspaces") {
 			const name = route[1] === "private" ? route[2] : route[1];
 			if (name) return slug(name);
-			const first = this.workspaces.public[0] || this.workspaces.private[0];
-			return first && first.key;
+			return this.items[0] && this.items[0].key;
 		}
-
-		// Ask Frappe's breadcrumbs which workspace this page belongs to
 		try {
 			const bc = frappe.breadcrumbs.all[frappe.breadcrumbs.current_page()];
 			if (bc) {
@@ -226,13 +295,11 @@ export class Rail {
 		} catch (e) {
 			/* breadcrumbs not ready */
 		}
-
 		const doctype = ["Form", "List", "Report", "Tree"].includes(route[0]) ? route[1] : null;
 		if (doctype && window.locals && locals.DocType && locals.DocType[doctype]) {
 			const by_module = this.find_by_module(locals.DocType[doctype].module);
 			if (by_module) return by_module.key;
 		}
-
 		return storage_get(sessionStorage, LAST_WS_KEY);
 	}
 
@@ -249,7 +316,7 @@ export class Rail {
 	}
 
 	is_home(key) {
-		const first = this.workspaces.public[0] || this.workspaces.private[0];
+		const first = this.items[0];
 		return key === "home" || (first && key === first.key);
 	}
 }

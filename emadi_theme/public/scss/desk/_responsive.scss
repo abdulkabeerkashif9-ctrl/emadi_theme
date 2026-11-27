@@ -1,44 +1,29 @@
 /* ==========================================================================
-   Responsive adaptations + small fixes
+   Responsive adaptations
    ========================================================================== */
 
-/* Link-style buttons size to content */
-.btn.btn-link,
-.btn-reset {
-	height: auto;
-}
-
-.btn.btn-link {
-	padding: 0 4px;
-	box-shadow: none !important;
-}
-
-/* Laptops */
 @media (max-width: 1279.98px) {
-	.layout-side-section {
-		padding-right: var(--et-sp-3);
-	}
-
-	.form-section,
-	.form-section.card-section,
-	.form-dashboard-section {
-		padding: var(--et-sp-4) var(--et-sp-5) !important;
+	.navbar .search-bar {
+		width: 224px;
+		max-width: 224px;
 	}
 }
 
-/* Tablets */
 @media (max-width: 991.98px) {
 	.page-head .page-head-content {
-		min-height: 60px;
+		padding-top: 12px;
+		padding-bottom: 12px;
 	}
 
 	.page-title .title-area .title-text,
 	.page-head .title-text {
-		font-size: var(--et-fs-xl);
+		font-size: 20px;
 	}
 
 	.navbar .search-bar {
+		width: auto;
 		max-width: none;
+		flex: 1 1 auto;
 	}
 
 	.navbar .search-bar .et-kbd-hint {
@@ -47,16 +32,20 @@
 
 	.navbar .search-bar input#navbar-search,
 	.navbar .search-bar input {
-		padding-right: 12px !important;
+		padding-right: 10px !important;
 	}
 
-	/* Frappe's overlay sidebar (mobile) */
+	.k-header-actions .k-create-label,
+	.k-header-actions .k-company {
+		display: none !important;
+	}
+
 	.overlay-sidebar.opened,
 	.layout-side-section .overlay-sidebar.opened {
-		background: var(--et-surface) !important;
-		box-shadow: var(--et-shadow-xl);
-		border-right: 1px solid var(--et-border);
-		padding: var(--et-sp-4);
+		background: var(--k-surface) !important;
+		box-shadow: var(--k-shadow-3);
+		border-right: 1px solid var(--k-line);
+		padding: 16px;
 	}
 
 	.list-row-head,
@@ -64,49 +53,31 @@
 	.form-tabs-list {
 		top: var(--et-nav-h);
 	}
+
+	body.et-has-rail .page-head > .container,
+	body.et-has-rail .page-body.container,
+	body.et-has-rail .page-container .container {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
 }
 
-/* Phones */
 @media (max-width: 767.98px) {
-	body {
-		font-size: var(--et-fs-sm);
-	}
-
-	.page-head .page-head-content {
-		padding-top: 10px;
-		padding-bottom: 8px;
-	}
-
 	.page-actions .btn {
 		height: 32px;
 	}
 
-	.form-section,
-	.form-section.card-section,
-	.form-dashboard-section {
-		padding: var(--et-sp-4) !important;
-	}
-
 	.form-tabs-list {
-		padding: 0 var(--et-sp-2) !important;
-	}
-
-	.layout-main-section .form-page,
-	.layout-main-section.frappe-card,
-	.frappe-card {
-		border-radius: var(--et-r-lg);
+		padding: 0 !important;
 	}
 
 	.frappe-list .list-row {
-		min-height: 52px;
+		height: auto;
+		min-height: 48px;
 	}
 
 	.modal-dialog {
 		margin: 12px;
-	}
-
-	.modal-content {
-		border-radius: var(--et-r-lg);
 	}
 
 	.dropdown-notifications .notifications-list {
@@ -116,9 +87,5 @@
 	.desk-alert {
 		min-width: 0;
 		width: calc(100vw - 24px);
-	}
-
-	.widget {
-		padding: 14px;
 	}
 }

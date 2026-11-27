@@ -8,14 +8,20 @@ html {
 
 body {
 	font-family: var(--et-font);
-	font-feature-settings: "cv11", "ss01", "ss03";
-	font-size: var(--et-fs-base);
-	line-height: var(--et-lh-base);
-	letter-spacing: 0;
-	color: var(--et-text-2);
-	background-color: var(--et-bg);
+	font-feature-settings: "cv11", "ss01";
+	font-size: 13px;
+	line-height: 1.5;
+	letter-spacing: normal;
+	color: var(--k-ink);
+	background-color: var(--k-bg);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	-webkit-tap-highlight-color: transparent;
+	scrollbar-width: thin;
+	scrollbar-color: var(--k-line-2) transparent;
 }
 
 h1,
@@ -30,21 +36,27 @@ h6,
 .h4,
 .h5,
 .h6 {
-	color: var(--et-text);
-	font-weight: var(--et-fw-semibold);
-	letter-spacing: var(--et-tracking-tight);
+	color: var(--k-ink);
+	font-weight: 600;
+	letter-spacing: -0.01em;
 }
 
 a {
-	transition: color var(--et-dur-fast) var(--et-ease);
+	transition: color var(--et-dur) var(--et-ease);
 }
 
 .text-muted {
-	color: var(--et-text-muted) !important;
+	color: var(--k-ink-3) !important;
 }
 
 .text-primary {
-	color: var(--et-accent) !important;
+	color: var(--k-gold-ink) !important;
+}
+
+.tnum,
+.text-right,
+td.text-right {
+	font-variant-numeric: tabular-nums;
 }
 
 code,
@@ -54,29 +66,27 @@ pre {
 }
 
 kbd {
-	background: var(--et-surface-3);
-	color: var(--et-text-2);
-	border: 1px solid var(--et-border);
-	border-bottom-width: 2px;
-	border-radius: var(--et-r-xs);
-	padding: 1px 5px;
-	font-size: 11px;
+	display: inline-flex;
+	align-items: center;
+	height: 18px;
+	padding: 0 5px;
+	font-size: 10.5px;
+	font-weight: 500;
+	color: var(--k-ink-3);
+	background: var(--k-surface);
+	border: 1px solid var(--k-line);
+	border-radius: 4px;
 	box-shadow: none;
 }
 
 ::selection {
-	background: var(--et-accent-soft-2);
-	color: var(--et-text);
+	background: var(--k-gold-soft);
+	color: var(--k-ink);
 }
 
-hr {
-	border-top-color: var(--et-divider);
-}
-
-/* Accessible, consistent focus ring for keyboard users */
 :focus-visible {
-	outline: 2px solid var(--et-accent);
-	outline-offset: 2px;
+	outline: 2px solid var(--k-gold);
+	outline-offset: 1px;
 }
 
 button:focus:not(:focus-visible),
@@ -84,10 +94,25 @@ a:focus:not(:focus-visible) {
 	outline: none;
 }
 
-/* Scrollbars */
-* {
-	scrollbar-width: thin;
-	scrollbar-color: var(--scrollbar-thumb-color) transparent;
+input,
+textarea {
+	caret-color: var(--k-gold-ink);
+	accent-color: var(--k-gold);
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: var(--k-ink-3);
+	opacity: 0.85;
+}
+
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0 40px var(--k-surface) inset;
+	-webkit-text-fill-color: var(--k-ink);
+}
+
+hr {
+	border-top-color: var(--k-line);
 }
 
 ::-webkit-scrollbar {
@@ -96,21 +121,17 @@ a:focus:not(:focus-visible) {
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: var(--scrollbar-thumb-color);
+	background-color: var(--k-line-2);
 	border: 3px solid transparent;
 	border-radius: 999px;
 	background-clip: content-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background-color: var(--et-text-subtle);
 }
 
 ::-webkit-scrollbar-track {
 	background: transparent;
 }
 
-/* Motion primitives */
+/* Motion primitives (Karkhana "rise") */
 @keyframes et-fade-in {
 	from {
 		opacity: 0;
@@ -127,7 +148,7 @@ a:focus:not(:focus-visible) {
 	}
 	to {
 		opacity: 1;
-		transform: translateY(0);
+		transform: none;
 	}
 }
 
@@ -138,29 +159,29 @@ a:focus:not(:focus-visible) {
 	}
 	to {
 		opacity: 1;
-		transform: translateY(0) scale(1);
+		transform: none;
 	}
 }
 
 @keyframes et-modal-in {
 	from {
 		opacity: 0;
-		transform: translateY(12px) scale(0.985);
+		transform: translateY(8px) scale(0.99);
 	}
 	to {
 		opacity: 1;
-		transform: translateY(0) scale(1);
+		transform: none;
 	}
 }
 
 @keyframes et-toast-in {
 	from {
 		opacity: 0;
-		transform: translateX(16px);
+		transform: translateY(8px);
 	}
 	to {
 		opacity: 1;
-		transform: translateX(0);
+		transform: none;
 	}
 }
 
@@ -173,7 +194,6 @@ a:focus:not(:focus-visible) {
 	}
 }
 
-/* Page transitions: content gently rises when a route renders */
 .page-container .page-body > .page-wrapper {
 	animation: et-rise var(--et-dur-slow) var(--et-ease) both;
 }

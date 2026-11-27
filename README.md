@@ -1,4 +1,4 @@
-# Emadi Theme
+# Emadi Theme (Karkhana design)
 
 A standalone **UI/UX redesign app for Frappe Framework v15** (works alongside ERPNext and any custom app, e.g. `emadi_v3`).
 It changes how the desk looks and feels and leaves what it does alone: no DocTypes, no overrides, no server code, no changes to Frappe/ERPNext core.
@@ -7,21 +7,21 @@ It changes how the desk looks and feels and leaves what it does alone: no DocTyp
 
 ## What you get
 
-| Area | Redesign |
+The desk now uses the **Karkhana** design language: a charcoal, cream and brass palette, Inter at 13px, 6px controls and 8px cards. Every value is copied from the Karkhana reference app.
+
+| Area | Karkhana treatment |
 | --- | --- |
-| **Design system** | Corporate palette (navy `#142B49`, slate `#345477`, accent `#3478F6`), Inter typography scale, 4px spacing scale, 6–12px radius system, minimal elevation, focus rings. Every Frappe "espresso" variable is re-mapped, so core and ERPNext components inherit it. |
-| **App rail** | New persistent left navigation (navy), built from the user's permitted workspaces (`frappe.boot.allowed_workspaces`). Icon mode with tooltips, or an expanded labelled mode (remembered per browser). Becomes an off-canvas drawer on tablets/phones. Highlights the module of the current document. |
-| **Top bar** | Frosted sticky bar, refined breadcrumbs, wide search with keyboard hint, cleaner notifications panel and user menu. |
-| **Home command-center** | Greeting + date banner, quick actions (Search, New To-Do, Calendar), live KPIs (open To-Dos, unread notifications, today's events) and *Recently viewed* documents. |
-| **Workspaces** | Card-style shortcut, link, number (KPI) and chart widgets with hover states; modern module sidebar. |
-| **List views** | Clean filter bar, sticky uppercase header, roomier rows, accent selected-row state, refined status pills, tabular numerals, paging. Also kanban, image, calendar and tree views. |
-| **Forms** | Document sheet on a soft canvas, sticky animated tabs, generous sections, bordered inputs with focus rings, red required markers, read-only values, dashboard/connection cards, comment box and timeline. |
-| **Child tables** | Bordered card grid, quiet header, hover/selected rows, borderless in-cell editing with focus ring, dashed "Add Row", red remove buttons. Grid widths/scroll logic untouched. |
-| **Reports** | Summary cards, chart panel, styled DataTable (header, filters row, hover, totals row, tree/group rows, dropdowns). |
-| **Components** | Buttons (primary/secondary/danger/link/icon), inputs, selects, checkboxes, radios, switches, date picker, autocomplete, dropdowns, popovers, tooltips, modals (entrance animation), toasts (status stripe), alerts, badges, avatars, skeleton shimmer, progress. |
-| **Login** | Split-screen: brand panel with a subtle grid background on the left, clean form on the right (centred on mobile). Frappe's login form & auth flow are unchanged. |
-| **Dark mode** | Full token set for `[data-theme="dark"]`. Use Frappe's built-in theme switcher (user menu → *Toggle Theme*, or the moon button in the rail). |
-| **Accessibility & motion** | Visible keyboard focus, AA-level text contrast, `prefers-reduced-motion` respected, all animations are short CSS transitions. |
+| **Design tokens** | The full Karkhana palette, light and dark (`--k-bg`, `--k-surface`, `--k-ink`, `--k-line`, `--k-gold`, `--k-sage`, status colours, sidebar, charts, shadows), re-mapped onto Frappe's own variables so core and ERPNext components inherit it. |
+| **Sidebar** | A 232px charcoal sidebar with grouped modules (Overview, Business, Operations, Modules, Finance, People, Administration), built from the user's permitted workspaces. Lucide icons, a gold active bar, and a user card with a menu (My Settings, Toggle theme, Log out). It collapses to a 60px icon rail, and becomes a drawer on tablet and phone. |
+| **Header** | 52px white bar with breadcrumbs, a 288px search box with keyboard hint, a solid **+ Create** menu (Sales Invoice, Purchase Order, Customer, Payment, Journal Entry, Stock Entry), notifications, help, a light/dark toggle, a company button and a sage avatar. |
+| **Home dashboard** | Greeting with company and date, quick-create buttons, and an 8-tile KPI grid built from ERPNext data: revenue, expenses and net profit with sparklines and change vs the previous period; cash & bank, receivables, payables and inventory value. Also a revenue-vs-expenses chart (12 months), pending approvals (draft Purchase Orders), recent transactions (Payment Entries) and top customers. |
+| **Lists** | White card, 12px muted headers with no fill, 40px rows with hairline dividers, 21px status pills, solid charcoal paging. |
+| **Forms** | Karkhana document layout: each section has its label in a 150px left column with fields on the right. Child-table sections run full width. Tabs are 13px with a 2px gold underline, inputs are 32px with a gold focus border. |
+| **Child tables** | Bordered table with a muted header row, bordered in-cell inputs and a "+ Add row" button. Widths and scrolling are untouched. |
+| **Reports** | Summary cards rendered as a stat strip, Karkhana-styled DataTable and charts. |
+| **Components** | Solid charcoal primary buttons, white bordered secondary buttons, gold focus, 8px menus with shadow-2, 12px dialogs, toasts, pills, date picker. |
+| **Login** | Split screen: a cream form column ("Welcome back", Work email, Password with eye toggle, "Sign in →") and a charcoal artwork panel with the brass arcs and headline. Frappe's auth flow is unchanged. |
+| **Dark mode** | Karkhana's dark palette. Switch with the header moon button, the sidebar user menu, or Frappe's theme switcher. |
 
 ## Install
 
@@ -71,15 +71,10 @@ During development: `bench watch` rebuilds on save.
 
 ## Customising
 
-All design decisions live in `public/scss/_tokens.scss`:
-
-* Brand: `--et-navy`, `--et-slate`, `--et-accent` (+ their dark-mode values)
-* Surfaces/text/borders: `--et-bg`, `--et-surface`, `--et-text*`, `--et-border*`
-* Shape & motion: `--et-r-*`, `--et-dur*`
-* Layout: `--et-rail-w`, `--et-rail-w-open`, `--et-nav-h`
-
-Login copy (headline and feature bullets) is in `public/js/emadi_theme_web.bundle.js`.
-The rail brand name uses the default **Company** (`sysdefaults.company`); the logo uses *Navbar Settings → App Logo*.
+* **Product name and login copy:** `public/js/emadi_theme/brand.js` (`BRAND.NAME`, `TAGLINE`, `SUBLINE`). The logo mark is `LOGO` in `public/js/emadi_theme/lucide.js`.
+* **Quick-create actions:** `QUICK_CREATE` in `brand.js`.
+* **Sidebar groups and icons:** `KNOWN` (exact workspace names) and `KEYWORDS` (custom workspaces) in `public/js/emadi_theme/rail.js`.
+* **Colours:** the `--k-*` values in `public/scss/_tokens.scss` (light and dark blocks).
 
 ## Files
 
@@ -104,7 +99,7 @@ emadi_theme/
         │   ├── desk/_page.scss                page head, actions, cards, skeletons, progress
         │   ├── desk/_sidebar.scss             workspace / list / form sidebars
         │   ├── desk/_components.scss          buttons, inputs, dropdowns, modals, toasts, badges, date picker…
-        │   ├── desk/_workspace.scss           widgets + Home command-center
+        │   ├── desk/_workspace.scss           widgets + Karkhana Home dashboard
         │   ├── desk/_list.scss                list, filters, paging, kanban, calendar, tree
         │   ├── desk/_form.scss                tabs, sections, fields, dashboard, comments, timeline
         │   ├── desk/_grid.scss                child tables
@@ -114,19 +109,19 @@ emadi_theme/
         │   └── web/_login.scss                split-screen auth
         └── js/
             ├── emadi_theme.bundle.js          desk entry (app_ready + route hooks)
-            ├── emadi_theme/rail.js            app rail
-            ├── emadi_theme/hero.js            Home command-center
-            ├── emadi_theme/recent.js          recently viewed (localStorage)
-            ├── emadi_theme/icons.js           inline icon set for theme chrome
-            └── emadi_theme_web.bundle.js      login brand panel
+            ├── emadi_theme/brand.js           product name, login copy, quick-create list
+            ├── emadi_theme/rail.js            grouped Karkhana sidebar + user menu
+            ├── emadi_theme/header.js          + Create menu, theme toggle, company button
+            ├── emadi_theme/dashboard.js       Home dashboard (ERPNext data, read-only)
+            ├── emadi_theme/lucide.js          Lucide icons + Karkhana logo mark
+            └── emadi_theme_web.bundle.js      Karkhana login
 ```
 
 ## How it stays safe
 
-* **No core edits, no class overrides, no monkey-patching.** JS only *adds* elements (rail, hero, search hint) and navigates with `frappe.set_route`, so permissions, route guards, keyboard shortcuts, realtime and client scripts behave as before.
-* **Hero is inserted beside the workspace body**, never inside it, so Workspace editing/saving is untouched.
-* **KPI counts** use `frappe.client.get_count` with `silent: true` on doctypes every user can read (ToDo, Notification Log, Event); a failure shows "—", never a dialog.
-* **Recently viewed** is stored only in the browser (localStorage, per user).
+* **No core edits, no class overrides, no monkey-patching.** JS only *adds* elements (sidebar, header controls, dashboard) and navigates with `frappe.set_route`, so permissions, route guards, keyboard shortcuts, realtime and client scripts behave as before.
+* **The dashboard is inserted beside the workspace body**, never inside it, so Workspace editing/saving is untouched.
+* **Dashboard data** comes from `frappe.client.get_list` with `silent: true`, so normal permissions apply. A user who can't read a doctype sees "—" for that tile and never gets an error dialog. It is read-only and cached per user for 10 minutes in sessionStorage. "Review" opens the draft Purchase Order; nothing is approved automatically.
 * **Child tables:** only colours, borders and radii change. No widths, heights or scroll containers are altered, so grid.js measurements (including custom horizontal scroll) keep working.
 * **CSS** is plain selectors on Frappe's documented template classes (`navbar.html`, `page.html`, `workspace.js`, list/form/grid templates), loaded after core. `!important` is used only where Frappe itself uses it.
 
@@ -144,7 +139,7 @@ Rendered against Frappe v15's **original compiled desk/website/login CSS** and m
 | Login split-screen | ✅ |
 | Browser console errors from theme code | none |
 
-**Not yet verified on a live site** (please check after install): saving/submitting/cancelling documents, link-field autocomplete, filter popovers, query reports with real data, print view, workspace edit mode, and every ERPNext/custom page. If something looks off, it's almost always a selector that needs a small tweak in one partial.
+**Not yet verified on a live site** (please check after install): the Home dashboard's ERPNext queries and chart against real data, saving/submitting/cancelling documents, link-field autocomplete, filter popovers, query reports with real data, print view, workspace edit mode, and every ERPNext/custom page. If something looks off, it's almost always a selector that needs a small tweak in one partial.
 
 ## Known limitations
 

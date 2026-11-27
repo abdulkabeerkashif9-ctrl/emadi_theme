@@ -1,51 +1,67 @@
 /* ==========================================================================
-   Page shell: page head, title, actions, side section, main section
+   Page shell (Karkhana: 20px gutters, max 1720px, 27px semibold titles)
    Markup: frappe/public/js/frappe/ui/page.html
    ========================================================================== */
 
+/* Karkhana content is fluid up to 1720px with 20px gutters */
+body.et-has-rail .navbar > .container,
+body.et-has-rail .page-head > .container,
+body.et-has-rail .page-body.container,
+body.et-has-rail .page-container .container {
+	max-width: var(--et-page-max);
+	width: 100%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+body.et-has-rail .navbar > .container {
+	max-width: none;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
 .page-head {
-	background: transparent;
+	background: var(--k-bg);
 	border-bottom: 0;
 	top: var(--et-nav-h);
-	transition: background-color var(--et-dur) var(--et-ease), box-shadow var(--et-dur) var(--et-ease);
+	transition: box-shadow var(--et-dur) var(--et-ease);
 }
 
 .page-head .page-head-content {
 	height: auto;
-	min-height: 72px;
-	padding-top: 14px;
-	padding-bottom: 10px;
+	min-height: 0;
+	padding-top: 20px;
+	padding-bottom: 16px;
+	align-items: flex-end;
 }
 
-/* When page scrolls Frappe adds .drop-shadow → frosted bar */
 .page-head.drop-shadow {
-	background: var(--navbar-bg);
-	-webkit-backdrop-filter: saturate(160%) blur(14px);
-	backdrop-filter: saturate(160%) blur(14px);
-	box-shadow: 0 1px 0 var(--et-border);
+	background: var(--k-bg);
+	box-shadow: 0 1px 0 var(--k-line);
 }
 
 .page-head.drop-shadow .page-head-content {
-	min-height: 60px;
-	padding-top: 8px;
-	padding-bottom: 8px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	align-items: center;
 }
 
 .page-title {
 	gap: 8px;
+	align-items: center;
 }
 
 .page-title .title-area .title-text,
 .page-head .title-text {
-	font-size: var(--et-fs-2xl);
-	font-weight: var(--et-fw-semibold);
-	letter-spacing: -0.022em;
-	color: var(--et-text);
-	line-height: 1.2;
+	font-size: 27px;
+	font-weight: 600;
+	letter-spacing: -0.025em;
+	color: var(--k-ink);
+	line-height: 1.33;
 }
 
 .page-head.drop-shadow .title-text {
-	font-size: var(--et-fs-xl);
+	font-size: 20px;
 }
 
 .page-title .title-area .indicator-pill {
@@ -54,28 +70,26 @@
 }
 
 .page-title .sub-heading {
-	font-size: var(--et-fs-sm);
-	color: var(--et-text-muted);
+	font-size: 13px;
+	color: var(--k-ink-3);
 	margin-top: 2px;
 }
 
 .page-title .sidebar-toggle-btn {
-	width: 34px;
-	height: 34px;
-	border-radius: var(--et-r-md);
+	width: 32px;
+	height: 32px;
+	border-radius: 6px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	margin-right: 6px;
-	color: var(--et-text-muted);
+	margin-right: 4px;
+	color: var(--k-ink-2);
 	--icon-stroke: currentColor;
-	transition: background-color var(--et-dur-fast) var(--et-ease);
+	transition: background-color var(--et-dur) var(--et-ease);
 }
 
 .page-title .sidebar-toggle-btn:hover {
-	background: var(--et-surface);
-	box-shadow: var(--et-shadow-sm);
-	color: var(--et-text);
+	background: var(--k-surface-3);
 }
 
 /* Actions */
@@ -101,95 +115,85 @@
 
 .page-actions .page-icon-group {
 	display: inline-flex;
-	gap: 6px;
+	gap: 8px;
 }
 
 /* Body */
 .page-body {
-	padding-bottom: var(--et-sp-10);
+	padding-bottom: 32px;
 }
 
 .layout-main {
-	margin-top: 4px;
+	margin-top: 0;
 }
 
-.layout-main-section-wrapper {
-	min-width: 0;
-}
-
+.layout-main-section-wrapper,
 .layout-main-section {
 	min-width: 0;
 }
 
-/* Generic white "sheet" used by list, report, page views */
+/* Card: rounded-lg, hairline border, surface, no shadow */
 .layout-main-section.frappe-card,
 .frappe-card {
-	background: var(--et-surface);
-	border: 1px solid var(--et-border);
-	border-radius: var(--et-r-xl);
-	box-shadow: var(--et-shadow-sm);
+	background: var(--k-surface);
+	border: 1px solid var(--k-line);
+	border-radius: 8px;
+	box-shadow: none;
 }
 
 .layout-main-section.frappe-card {
-	/* clip (not hidden) keeps position: sticky working for list headers */
 	overflow: clip;
 }
 
-/* Page-level toolbar and empty states */
 .page-toolbar {
-	border-bottom: 1px solid var(--et-border);
+	border-bottom: 1px solid var(--k-line);
 }
 
 .no-result,
 .msg-box {
-	color: var(--et-text-muted);
-}
-
-.msg-box .null-state,
-.no-result .null-state {
-	opacity: 0.85;
-	filter: saturate(0.6);
+	color: var(--k-ink-3);
 }
 
 .msg-box p,
 .no-result p {
-	color: var(--et-text-muted);
-	font-size: var(--et-fs-base);
+	color: var(--k-ink-3);
+	font-size: 13px;
 }
 
-/* Loading skeletons */
+.msg-box .null-state,
+.no-result .null-state {
+	opacity: 0.7;
+	filter: grayscale(1);
+}
+
+/* Skeletons */
 .skeleton-bg,
 .widget-skeleton .skeleton-card,
 .list-skeleton .skeleton-row,
 [class*="skeleton"] .skeleton-bg {
-	background: linear-gradient(90deg, var(--et-surface-3) 0%, var(--et-surface-hover) 40%, var(--et-surface-3) 80%);
+	background: linear-gradient(90deg, var(--k-surface-3) 0%, var(--k-surface-2) 40%, var(--k-surface-3) 80%);
 	background-size: 800px 100%;
 	animation: et-shimmer 1.4s linear infinite;
 }
 
-/* Frappe "freeze" overlay */
 .freeze-message-container {
-	background: var(--et-overlay);
-	-webkit-backdrop-filter: blur(2px);
-	backdrop-filter: blur(2px);
+	background: var(--k-overlay);
 }
 
 .freeze-message-container .freeze-message {
 	color: #fff;
-	font-weight: var(--et-fw-medium);
+	font-weight: 500;
 }
 
-/* Progress bar (top route loader & progress dialogs) */
 .progress {
 	height: 6px;
-	background: var(--et-surface-3);
-	border-radius: var(--et-r-full);
+	background: var(--k-surface-3);
+	border-radius: 999px;
 	box-shadow: none;
 	overflow: hidden;
 }
 
 .progress-bar {
-	background: var(--et-accent);
-	border-radius: var(--et-r-full);
-	transition: width var(--et-dur-slow) var(--et-ease);
+	background: var(--k-chart-1);
+	border-radius: 999px;
 }

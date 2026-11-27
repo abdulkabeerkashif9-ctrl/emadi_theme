@@ -1,35 +1,36 @@
 /* ==========================================================================
-   Form view: document sheet · tabs · sections · fields · dashboard ·
-   comments · activity timeline
+   Form view (Karkhana document layout)
+   · white card, rounded-lg, hairline border
+   · each section = 150px label column + fields (fieldset grid)
+   · sections holding a child table run full-width, label on top
+   · tabs: 13px, 2px gold underline
    ========================================================================== */
 
-/* ---------- Document sheet ---------- */
 .form-layout {
 	background: transparent;
 }
 
 .layout-main-section .form-page,
 .form-layout > .form-page {
-	background: var(--et-surface);
-	border: 1px solid var(--et-border);
-	border-radius: var(--et-r-xl);
-	box-shadow: var(--et-shadow-sm);
+	background: var(--k-surface);
+	border: 1px solid var(--k-line);
+	border-radius: 8px;
+	box-shadow: none;
 	overflow: clip;
 }
 
 .form-layout .form-message {
-	margin-bottom: var(--et-sp-3);
-	border-radius: var(--et-r-lg);
+	margin-bottom: 12px;
 }
 
-/* ---------- Tabs ---------- */
+/* ---------- Tabs (above the card, like Details / Print preview) ---------- */
 .form-tabs-list {
 	position: sticky;
-	top: calc(var(--et-nav-h) + 60px);
+	top: calc(var(--et-nav-h) + 52px);
 	z-index: 4;
-	padding: 0 var(--et-sp-5) !important;
-	background: var(--et-surface);
-	border-bottom: 1px solid var(--et-border);
+	padding: 0 4px !important;
+	background: var(--k-surface);
+	border-bottom: 1px solid var(--k-line);
 	overflow-x: auto;
 	scrollbar-width: none;
 }
@@ -40,62 +41,48 @@
 
 .form-tabs-list .form-tabs {
 	flex-wrap: nowrap;
-	gap: 4px;
+	gap: 0;
 	border: 0;
 }
 
 .form-tabs-list .form-tabs .nav-item .nav-link,
 .form-tabs .nav-link {
 	position: relative;
-	padding: 14px 12px !important;
-	margin: 0 !important;
-	color: var(--et-text-muted);
-	font-size: var(--et-fs-sm);
-	font-weight: var(--et-fw-medium);
+	margin: 0 0 -1px !important;
+	padding: 8px 12px !important;
+	color: var(--k-ink-3);
+	font-size: 13px;
+	font-weight: 400;
 	white-space: nowrap;
 	border: 0 !important;
+	border-bottom: 2px solid transparent !important;
+	border-radius: 0;
 	background: transparent !important;
-	transition: color var(--et-dur-fast) var(--et-ease);
-}
-
-.form-tabs-list .form-tabs .nav-item .nav-link::after {
-	content: "";
-	position: absolute;
-	left: 10px;
-	right: 10px;
-	bottom: -1px;
-	height: 2px;
-	border-radius: 2px 2px 0 0;
-	background: var(--et-accent);
-	transform: scaleX(0);
-	transition: transform var(--et-dur) var(--et-ease);
+	transition: color var(--et-dur) var(--et-ease);
 }
 
 .form-tabs-list .form-tabs .nav-item .nav-link:hover {
-	color: var(--et-text);
+	color: var(--k-ink);
 }
 
 .form-tabs-list .form-tabs .nav-item .nav-link.active {
-	color: var(--et-text);
-	font-weight: var(--et-fw-semibold);
-}
-
-.form-tabs-list .form-tabs .nav-item .nav-link.active::after {
-	transform: scaleX(1);
+	color: var(--k-ink);
+	font-weight: 500;
+	border-bottom-color: var(--k-gold) !important;
 }
 
 .form-tab-content .tab-pane.active,
 .form-tab-content .tab-pane.show {
-	animation: et-fade-in var(--et-dur) var(--et-ease) both;
+	animation: et-fade-in var(--et-dur-slow) var(--et-ease) both;
 }
 
-/* ---------- Sections ---------- */
-.form-section,
-.form-section.card-section,
+/* ---------- Sections: 150px label column ---------- */
+.form-layout .form-section,
+.form-layout .form-section.card-section,
 .form-dashboard-section {
-	padding: var(--et-sp-5) var(--et-sp-6) !important;
 	margin: 0 !important;
-	border-bottom: 1px solid var(--et-divider) !important;
+	padding: 16px !important;
+	border-bottom: 1px solid var(--k-line) !important;
 	border-radius: 0 !important;
 	background: transparent;
 	box-shadow: none;
@@ -106,21 +93,64 @@
 	border-bottom: 0 !important;
 }
 
+@media (min-width: 768px) {
+	.form-layout .form-section.card-section {
+		display: grid;
+		grid-template-columns: 150px minmax(0, 1fr);
+		column-gap: 20px;
+		align-items: start;
+	}
+
+	.form-layout .form-section.card-section > .section-head {
+		grid-column: 1;
+	}
+
+	.form-layout .form-section.card-section > .section-body,
+	.form-layout .form-section.card-section > .section-description {
+		grid-column: 2;
+		min-width: 0;
+	}
+
+	.form-layout .form-section.card-section > :not(.section-head):not(.section-body):not(.section-description) {
+		grid-column: 1 / -1;
+	}
+
+	/* Child-table sections: full width, title on top (like "Items") */
+	.form-layout .form-section.card-section:has(.frappe-control[data-fieldtype="Table"]),
+	.form-layout .form-section.card-section:has(.frappe-control[data-fieldtype="Table MultiSelect"]),
+	.form-layout .form-section.card-section:has(.frappe-control[data-fieldtype="HTML"]) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.form-layout .form-section.card-section:has(.frappe-control[data-fieldtype="Table"]) > .section-head,
+	.form-layout .form-section.card-section:has(.frappe-control[data-fieldtype="Table"]) > .section-body {
+		grid-column: 1;
+	}
+}
+
 .form-section .section-head,
 .form-dashboard-section .section-head {
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 6px;
 	padding: 0 !important;
-	margin: 0 0 var(--et-sp-4) 0 !important;
-	font-size: var(--et-fs-md);
-	font-weight: var(--et-fw-semibold);
-	letter-spacing: -0.008em;
-	color: var(--et-text);
+	margin: 0 0 12px 0 !important;
+	font-size: 13px;
+	font-weight: 600;
+	letter-spacing: normal;
+	color: var(--k-ink);
+	line-height: 1.5;
 }
 
-.form-section .section-head.collapsed {
-	margin-bottom: 0 !important;
+@media (min-width: 768px) {
+	.form-layout .form-section.card-section > .section-head {
+		margin-bottom: 0 !important;
+		padding-top: 1px !important;
+	}
+
+	.form-layout .form-section.card-section:has(.frappe-control[data-fieldtype="Table"]) > .section-head {
+		margin-bottom: 12px !important;
+	}
 }
 
 .form-section .section-head.collapsible {
@@ -130,39 +160,43 @@
 
 .form-section .section-head .collapse-indicator {
 	display: inline-flex;
-	width: 22px;
-	height: 22px;
+	width: 20px;
+	height: 20px;
 	align-items: center;
 	justify-content: center;
-	border-radius: var(--et-r-sm);
-	transition: transform var(--et-dur) var(--et-ease), background-color var(--et-dur-fast) var(--et-ease);
-	--icon-stroke: var(--et-text-muted);
+	border-radius: 4px;
+	--icon-stroke: var(--k-ink-3);
 }
 
 .form-section .section-head.collapsible:hover .collapse-indicator {
-	background: var(--et-surface-hover);
+	background: var(--k-surface-3);
 }
 
-.form-section .section-description,
-.form-section .section-body > .form-column > .section-description {
-	color: var(--et-text-muted);
-	font-size: var(--et-fs-sm);
-	margin-top: -8px;
-	margin-bottom: var(--et-sp-4);
+.form-section .section-description {
+	color: var(--k-ink-3);
+	font-size: 12px;
+	margin-bottom: 12px;
 }
 
+/* Field grid: 16px column gap, 14px row gap (gap-x-4 gap-y-3.5) */
 .form-section .section-body {
-	row-gap: 2px;
+	margin-left: -8px;
+	margin-right: -8px;
 }
 
 .form-column {
-	padding-left: 12px;
-	padding-right: 12px;
+	padding-left: 8px;
+	padding-right: 8px;
 }
 
 /* ---------- Fields ---------- */
 .frappe-control {
-	margin-bottom: var(--et-sp-4);
+	margin-bottom: 14px;
+}
+
+.form-column > form > .frappe-control:last-child,
+.form-column .frappe-control:last-child {
+	margin-bottom: 0;
 }
 
 .frappe-control .form-group {
@@ -175,113 +209,88 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 2px;
-	margin-bottom: 6px;
+	margin-bottom: 4px;
 	padding: 0;
-	font-size: var(--et-fs-xs);
-	font-weight: var(--et-fw-semibold);
-	letter-spacing: 0.005em;
-	color: var(--et-text-2);
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: normal;
+	color: var(--k-ink-2);
 }
 
 .control-label.reqd::after,
 .frappe-control .control-label.reqd::after {
 	content: "*";
-	color: var(--et-danger);
-	margin-left: 3px;
-	font-weight: var(--et-fw-semibold);
+	color: var(--k-bad);
+	margin-left: 2px;
+	font-weight: 500;
 }
 
 .frappe-control .help-box,
 .help-box {
-	margin-top: 6px;
-	color: var(--et-text-muted);
-	font-size: var(--et-fs-xs);
+	margin-top: 4px;
+	color: var(--k-ink-3);
+	font-size: 12px;
 	line-height: 1.45;
 }
 
-.frappe-control .control-input-wrapper {
-	position: relative;
-}
-
-/* Mandatory, not-yet-filled fields get a hint */
 .frappe-control.has-error .control-label {
-	color: var(--et-danger-text);
+	color: var(--k-bad-ink);
 }
 
-/* Read-only field values in submitted docs */
 .frappe-control .control-value {
-	color: var(--et-text);
-	font-size: var(--et-fs-sm);
+	color: var(--k-ink);
+	font-size: 13px;
 }
 
-/* Currency/number fields */
 .frappe-control[data-fieldtype="Currency"] input,
 .frappe-control[data-fieldtype="Float"] input,
 .frappe-control[data-fieldtype="Int"] input,
 .frappe-control[data-fieldtype="Percent"] input,
 .frappe-control[data-fieldtype="Currency"] .control-value,
 .frappe-control[data-fieldtype="Float"] .control-value,
-.frappe-control[data-fieldtype="Int"] .control-value {
+.frappe-control[data-fieldtype="Int"] .control-value,
+.frappe-control[data-fieldtype="Percent"] .control-value {
 	font-variant-numeric: tabular-nums;
+	text-align: right;
 }
 
-/* Text editor (Quill) */
+/* Text editor */
 .frappe-control .ql-toolbar.ql-snow {
-	background: var(--et-surface-2);
-	border: 1px solid var(--et-input-border) !important;
+	background: var(--k-surface-2);
+	border: 1px solid var(--k-line-2) !important;
 	border-bottom: 0 !important;
-	border-radius: var(--et-r-md) var(--et-r-md) 0 0;
+	border-radius: 6px 6px 0 0;
 }
 
 .frappe-control .ql-container.ql-snow {
-	background: var(--et-input-bg);
-	border: 1px solid var(--et-input-border) !important;
-	border-radius: 0 0 var(--et-r-md) var(--et-r-md);
+	background: var(--k-surface);
+	border: 1px solid var(--k-line-2) !important;
+	border-radius: 0 0 6px 6px;
 	font-family: var(--et-font);
-	font-size: var(--et-fs-sm);
+	font-size: 13px;
 }
 
 .frappe-control .ql-editor {
-	min-height: 140px;
-	color: var(--et-text);
+	min-height: 120px;
+	color: var(--k-ink);
 }
 
-/* Code editor */
 .frappe-control .ace_editor {
-	border: 1px solid var(--et-input-border);
-	border-radius: var(--et-r-md);
+	border: 1px solid var(--k-line-2);
+	border-radius: 6px;
 }
 
-/* Attach field */
 .frappe-control[data-fieldtype="Attach"] .attached-file,
 .frappe-control[data-fieldtype="Attach Image"] .attached-file {
 	padding: 6px 10px;
-	background: var(--et-surface-2);
-	border: 1px solid var(--et-border);
-	border-radius: var(--et-r-md);
+	background: var(--k-surface-2);
+	border: 1px solid var(--k-line);
+	border-radius: 6px;
 }
 
-/* Signature pad & image */
-.frappe-control .signature-field,
-.frappe-control .attach-image-display img {
-	border-radius: var(--et-r-md);
-	border: 1px solid var(--et-border);
-}
-
-/* Heading / HTML fields */
-.frappe-control[data-fieldtype="Heading"] h4 {
-	font-size: var(--et-fs-md);
-	color: var(--et-text);
-}
-
-/* ---------- Form dashboard (connections, stats, progress) ---------- */
+/* ---------- Form dashboard (connections) ---------- */
 .form-dashboard {
 	background: transparent;
-}
-
-.form-dashboard-section .section-body,
-.form-dashboard .form-dashboard-section {
-	border: 0 !important;
 }
 
 .form-dashboard .document-link {
@@ -289,207 +298,150 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 8px;
-	padding: 8px 10px;
+	height: 36px;
+	padding: 0 10px;
 	margin-bottom: 6px;
-	background: var(--et-surface-2);
-	border: 1px solid var(--et-border);
-	border-radius: var(--et-r-md);
-	transition: border-color var(--et-dur-fast) var(--et-ease), background-color var(--et-dur-fast) var(--et-ease);
+	background: var(--k-surface);
+	border: 1px solid var(--k-line);
+	border-radius: 6px;
 }
 
 .form-dashboard .document-link:hover {
-	border-color: var(--et-accent-soft-2);
-	background: var(--et-surface);
-}
-
-.form-dashboard .document-link .document-link-badge {
-	gap: 8px;
+	border-color: var(--k-gold);
 }
 
 .form-dashboard .document-link .badge-link,
 .form-dashboard .document-link a {
-	color: var(--et-text);
-	font-weight: var(--et-fw-medium);
-	font-size: var(--et-fs-sm);
+	color: var(--k-ink);
+	font-weight: 400;
+	font-size: 13px;
 }
 
 .form-dashboard .document-link .count {
-	min-width: 22px;
-	height: 20px;
+	min-width: 20px;
+	height: 18px;
 	padding: 0 6px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	background: var(--et-accent-soft);
-	color: var(--et-info-text);
-	border-radius: var(--et-r-full);
-	font-size: var(--et-fs-2xs);
-	font-weight: var(--et-fw-bold);
-}
-
-.form-dashboard .document-link .btn-new {
-	width: 24px;
-	height: 24px;
-	border-radius: var(--et-r-sm);
+	background: var(--k-surface-3);
+	color: var(--k-ink-2);
+	border-radius: 9999px;
+	font-size: 11px;
+	font-weight: 500;
 }
 
 .form-dashboard .form-link-title {
-	font-size: var(--et-fs-2xs);
-	font-weight: var(--et-fw-semibold);
-	letter-spacing: var(--et-tracking-caps);
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	color: var(--et-text-subtle);
+	color: var(--k-ink-3);
 	margin-bottom: 8px;
 }
 
-.form-dashboard .progress-area .progress-chart {
-	border-radius: var(--et-r-md);
-}
-
-.form-dashboard .stat-label {
-	color: var(--et-text-muted);
-}
-
-/* Heatmap */
-.form-dashboard .heatmap .frappe-chart .chart-legend text {
-	fill: var(--et-text-muted);
-}
-
-/* ---------- Form footer: comments & timeline ---------- */
+/* ---------- Comments & timeline ---------- */
 .form-footer {
-	margin-top: var(--et-sp-6);
-	padding: 0 4px;
+	margin-top: 16px;
+	padding: 0;
 }
 
 .form-footer .scroll-to-top {
-	width: 36px;
-	height: 36px;
+	width: 32px;
+	height: 32px;
 	padding: 0;
-	border-radius: 50%;
-	box-shadow: var(--et-shadow-md);
-}
-
-.form-footer .after-save,
-.form-footer .comment-box {
-	margin-bottom: var(--et-sp-5);
+	border-radius: 6px;
 }
 
 .comment-box .comment-title,
 .new-timeline .timeline-head,
 .form-footer .head-title {
-	font-size: var(--et-fs-md);
-	font-weight: var(--et-fw-semibold);
-	color: var(--et-text);
-	letter-spacing: -0.008em;
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	color: var(--k-ink);
 }
 
 .comment-box .comment-input-wrapper .ql-container,
 .comment-box .frappe-control .ql-container,
 .comment-input-container .ql-container {
-	background: var(--et-surface);
-	border: 1px solid var(--et-input-border) !important;
-	border-radius: var(--et-r-lg) !important;
-	box-shadow: var(--et-shadow-xs);
-	transition: border-color var(--et-dur-fast) var(--et-ease), box-shadow var(--et-dur-fast) var(--et-ease);
+	background: var(--k-surface);
+	border: 1px solid var(--k-line-2) !important;
+	border-radius: 6px !important;
 }
 
 .comment-box .comment-input-wrapper .ql-container:focus-within,
 .comment-input-container .ql-container:focus-within {
-	border-color: var(--et-accent) !important;
-	box-shadow: 0 0 0 3px var(--et-accent-ring);
+	border-color: var(--k-gold) !important;
 }
 
 .comment-box .ql-editor {
-	min-height: 64px;
-}
-
-/* Timeline */
-.new-timeline {
-	--timeline-item-icon-size: 28px;
+	min-height: 50px;
 }
 
 .new-timeline::before,
 .timeline::before {
-	background: var(--et-border) !important;
+	background: var(--k-line) !important;
 	width: 1px !important;
 }
 
 .new-timeline .timeline-item {
-	margin-bottom: var(--et-sp-3);
-	font-size: var(--et-fs-sm);
-	color: var(--et-text-2);
+	margin-bottom: 12px;
+	font-size: 13px;
+	color: var(--k-ink-2);
 }
 
 .new-timeline .timeline-item .timeline-content {
-	color: var(--et-text-2);
-	font-size: var(--et-fs-sm);
+	color: var(--k-ink-2);
+	font-size: 13px;
 }
 
 .new-timeline .timeline-item .timeline-content a {
-	color: var(--et-text);
-	font-weight: var(--et-fw-medium);
+	color: var(--k-ink);
+	font-weight: 500;
 }
 
-.new-timeline .timeline-item .timeline-content .frappe-timestamp,
+.new-timeline .timeline-item .frappe-timestamp,
 .new-timeline .timeline-item .text-muted {
-	color: var(--et-text-subtle) !important;
-	font-size: var(--et-fs-xs);
+	color: var(--k-ink-3) !important;
+	font-size: 12px;
 }
 
 .new-timeline .timeline-dot {
-	width: 9px;
-	height: 9px;
-	background: var(--et-surface);
-	border: 2px solid var(--et-border-strong);
+	width: 8px;
+	height: 8px;
+	background: var(--k-surface);
+	border: 2px solid var(--k-line-2);
 }
 
 .new-timeline .timeline-badge {
 	width: 28px;
 	height: 28px;
-	background: var(--et-surface);
-	border: 1px solid var(--et-border);
-	box-shadow: 0 0 0 4px var(--et-bg);
-	--icon-stroke: var(--et-text-muted);
+	background: var(--k-surface);
+	border: 1px solid var(--k-line);
+	box-shadow: 0 0 0 4px var(--k-bg);
+	--icon-stroke: var(--k-ink-3);
 }
 
 .timeline-message-box,
-.new-timeline .timeline-content.frappe-card,
-.new-timeline .timeline-item .timeline-message-box {
-	padding: 12px 14px;
-	background: var(--et-surface);
-	border: 1px solid var(--et-border);
-	border-radius: var(--et-r-lg);
-	box-shadow: var(--et-shadow-xs);
-}
-
-.timeline-message-box .content,
-.timeline-message-box .ql-editor {
-	color: var(--et-text-2);
+.new-timeline .timeline-content.frappe-card {
+	padding: 10px 12px;
+	background: var(--k-surface);
+	border: 1px solid var(--k-line);
+	border-radius: 8px;
+	box-shadow: none;
 }
 
 .new-timeline .timeline-item.user-content .timeline-message-box {
-	border-left: 3px solid var(--et-accent);
+	border-left: 2px solid var(--k-gold);
 }
 
-.new-timeline .activity-title,
-.new-timeline .timeline-item .show-all-activity {
-	font-size: var(--et-fs-xs);
-	font-weight: var(--et-fw-semibold);
-	color: var(--et-accent);
-}
-
-/* Workflow & document actions */
 .workflow-button-area .btn {
 	margin-left: 6px;
 }
 
-/* Print preview */
 .print-preview-wrapper .print-preview {
-	border-radius: var(--et-r-md);
-	box-shadow: var(--et-shadow-lg);
-	border: 1px solid var(--et-border);
-}
-
-.print-toolbar {
-	gap: 8px;
+	border-radius: 8px;
+	box-shadow: var(--k-shadow-2);
+	border: 1px solid var(--k-line);
 }

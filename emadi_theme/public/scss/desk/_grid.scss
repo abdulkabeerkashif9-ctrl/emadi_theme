@@ -1,37 +1,32 @@
 /* ==========================================================================
-   Child tables (frappe.ui.form.Grid)
-   Visual only: no changes to widths, scroll containers or row heights that
-   grid.js measures, so custom horizontal-scroll logic keeps working.
+   Child tables (Karkhana "Items" table)
+   Edge-to-edge with border-y, 12px ink-3 header row, 44px rows,
+   bordered inputs inside cells. Visual only: widths / scroll untouched.
    ========================================================================== */
 
 .frappe-control[data-fieldtype="Table"] > .form-group > .control-label,
 .grid-field > .control-label {
-	font-size: var(--et-fs-sm);
-	font-weight: var(--et-fw-semibold);
-	color: var(--et-text);
-	margin-bottom: 10px;
-}
-
-.form-grid-container {
-	border-radius: var(--et-r-lg);
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--k-ink);
+	margin-bottom: 12px;
 }
 
 .form-grid {
-	background: var(--et-surface);
-	border: 1px solid var(--et-border) !important;
-	border-radius: var(--et-r-lg) !important;
-	box-shadow: var(--et-shadow-xs);
+	background: var(--k-surface);
+	border: 1px solid var(--k-line) !important;
+	border-radius: 6px !important;
+	box-shadow: none;
 }
 
 /* Header */
 .form-grid .grid-heading-row {
-	background: var(--et-surface-2) !important;
-	border-bottom: 1px solid var(--et-border) !important;
-	border-radius: var(--et-r-lg) var(--et-r-lg) 0 0;
-	color: var(--et-text-muted);
-	font-size: var(--et-fs-xs);
-	font-weight: var(--et-fw-semibold);
-	letter-spacing: 0.01em;
+	background: var(--k-surface-2) !important;
+	border-bottom: 1px solid var(--k-line) !important;
+	border-radius: 6px 6px 0 0;
+	color: var(--k-ink-3);
+	font-size: 12px;
+	font-weight: 500;
 }
 
 .form-grid .grid-heading-row .grid-row,
@@ -41,20 +36,18 @@
 
 .form-grid .grid-heading-row .static-area,
 .form-grid .grid-heading-row .grid-static-col {
-	color: var(--et-text-muted);
-	font-weight: var(--et-fw-semibold);
+	color: var(--k-ink-3);
+	font-weight: 500;
 }
 
-.form-grid .grid-heading-row .static-area.reqd::after,
-.form-grid .grid-heading-row .grid-static-col .reqd::after {
-	color: var(--et-danger);
+.form-grid .grid-heading-row .static-area.reqd::after {
+	color: var(--k-bad);
 }
 
-/* Body rows */
+/* Rows */
 .form-grid .grid-body .grid-row {
-	background: var(--et-surface);
-	border-bottom: 1px solid var(--et-divider) !important;
-	transition: background-color var(--et-dur-fast) var(--et-ease);
+	background: var(--k-surface);
+	border-bottom: 1px solid var(--k-line) !important;
 }
 
 .form-grid .grid-body .rows .grid-row:last-child {
@@ -64,25 +57,25 @@
 .form-grid .grid-body .grid-row:hover,
 .form-grid .grid-body .grid-row:hover .data-row,
 .form-grid .grid-body .grid-row:hover .grid-static-col {
-	background: var(--highlight-color);
+	background: var(--k-surface-2);
 }
 
 .form-grid .grid-row .data-row {
-	font-size: var(--et-fs-sm);
-	color: var(--et-text);
+	font-size: 13px;
+	color: var(--k-ink);
 }
 
 .form-grid .grid-static-col,
 .form-grid .row-index,
 .form-grid .row-check {
-	border-color: var(--et-divider) !important;
+	border-color: var(--k-line) !important;
 }
 
 .form-grid .row-index,
 .form-grid .row-index span {
-	color: var(--et-text-subtle);
+	color: var(--k-ink-3);
+	font-size: 12px;
 	font-variant-numeric: tabular-nums;
-	font-size: var(--et-fs-xs);
 }
 
 .form-grid .grid-static-col[data-fieldtype="Currency"],
@@ -92,124 +85,110 @@
 	font-variant-numeric: tabular-nums;
 }
 
-/* Editable cells: inputs blend into the cell, ring on focus */
+/* In-cell editing: bordered field inside the cell (Karkhana style) */
 .form-grid .grid-row .editable-row .form-control,
-.form-grid .grid-row .grid-static-col .form-control,
 .form-grid .editable-row .frappe-control .form-control {
-	height: 100%;
-	min-height: 36px;
-	background: transparent;
-	border: 0 !important;
-	border-radius: 0 !important;
+	height: 32px;
+	min-height: 32px;
+	margin: 4px 0;
+	background: var(--k-surface);
+	border: 1px solid var(--k-line-2) !important;
+	border-radius: 6px !important;
 	box-shadow: none !important;
-	font-size: var(--et-fs-sm);
+	font-size: 13px;
 }
 
 .form-grid .grid-row .editable-row .form-control:focus,
 .form-grid .editable-row .frappe-control .form-control:focus {
-	background: var(--et-input-bg);
-	box-shadow: inset 0 0 0 2px var(--et-accent) !important;
+	border-color: var(--k-gold) !important;
 }
 
 .form-grid .editable-row .frappe-control {
 	margin-bottom: 0;
 }
 
-/* Selected rows */
 .form-grid .grid-row:has(.grid-row-check:checked),
 .form-grid .grid-row:has(.grid-row-check:checked) .data-row,
 .form-grid .grid-row:has(.grid-row-check:checked) .grid-static-col {
-	background: var(--et-accent-soft) !important;
+	background: var(--k-gold-faint) !important;
 }
 
-/* Row open (edit full row) button */
 .form-grid .btn-open-row {
-	border-radius: var(--et-r-sm);
-	--icon-stroke: var(--et-text-muted);
+	border-radius: 4px;
+	--icon-stroke: var(--k-ink-3);
 }
 
 .form-grid .btn-open-row:hover {
-	background: var(--et-surface-hover);
-	--icon-stroke: var(--et-accent);
+	background: var(--k-surface-3);
 }
 
-/* Empty */
 .form-grid .grid-empty {
-	padding: 28px 0;
-	color: var(--et-text-subtle);
-	font-size: var(--et-fs-sm);
+	padding: 24px 0;
+	color: var(--k-ink-3);
+	font-size: 13px;
 }
 
-/* Footer actions */
+/* Footer: "+ Add row" secondary xs button */
 .grid-footer {
-	margin-top: 10px;
+	margin-top: 12px;
 	padding: 0 !important;
 	background: transparent !important;
 }
 
 .grid-footer .grid-buttons {
-	gap: 6px;
+	gap: 8px;
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.grid-footer .grid-add-row,
-.grid-footer .grid-add-multiple-rows {
-	border-style: dashed !important;
-	border-color: var(--et-border-strong) !important;
-	color: var(--et-text-2);
-	background: transparent !important;
-	box-shadow: none !important;
+.grid-footer .btn {
+	height: 28px;
+	padding: 0 10px;
+	font-size: 12px;
 }
 
-.grid-footer .grid-add-row:hover,
-.grid-footer .grid-add-multiple-rows:hover {
-	border-color: var(--et-accent) !important;
-	color: var(--et-accent);
-	background: var(--et-accent-soft) !important;
+.grid-footer .grid-add-row::before {
+	content: "+";
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 1;
+	margin-right: 2px;
 }
 
 .grid-footer .grid-remove-rows,
 .grid-footer .grid-remove-all-rows {
-	background: var(--et-danger-soft) !important;
-	border-color: transparent !important;
-	color: var(--et-danger-text) !important;
+	background: var(--k-surface) !important;
+	border-color: var(--k-line-2) !important;
+	color: var(--k-bad-ink) !important;
 }
 
 .grid-footer .grid-remove-rows:hover,
 .grid-footer .grid-remove-all-rows:hover {
-	background: var(--et-danger) !important;
-	color: #fff !important;
+	background: var(--k-bad-soft) !important;
 }
 
-.grid-footer .grid-pagination .btn {
-	height: 26px;
-}
-
-/* Expanded row editor */
 .grid-row-open {
-	border: 1px solid var(--et-accent-soft-2) !important;
-	border-radius: var(--et-r-lg);
-	box-shadow: var(--et-shadow-lg);
-	background: var(--et-surface);
+	border: 1px solid var(--k-line) !important;
+	border-radius: 8px;
+	box-shadow: var(--k-shadow-2);
+	background: var(--k-surface);
 }
 
 .grid-row-open .grid-form-heading {
-	background: var(--et-surface-2);
-	border-bottom: 1px solid var(--et-border);
+	background: var(--k-surface);
+	border-bottom: 1px solid var(--k-line);
 	padding: 10px 14px;
 }
 
 .grid-row-open .grid-form-heading .panel-title {
-	font-weight: var(--et-fw-semibold);
-	color: var(--et-text);
+	font-weight: 600;
+	color: var(--k-ink);
 }
 
 .grid-form-body .form-area {
-	padding: var(--et-sp-4);
+	padding: 16px;
 }
 
-/* Horizontal scrolling on narrow screens */
 @media (max-width: 767.98px) {
 	.form-grid-container {
 		overflow-x: auto;

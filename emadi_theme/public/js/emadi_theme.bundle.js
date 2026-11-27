@@ -1,21 +1,13 @@
 // Emadi Theme · Desk entry point (hooks.app_include_js)
-// Purely presentational: adds the navigation rail, the Home command-center
-// and a search keyboard hint. No business logic, no overrides of Frappe
-// classes, no server writes.
+// Karkhana design language for Frappe v15: sidebar, header controls and the
+// Home dashboard. Presentation only; no overrides of Frappe classes.
 
 import { Rail } from "./emadi_theme/rail";
-import { Hero } from "./emadi_theme/hero";
-import { track_current_route } from "./emadi_theme/recent";
+import { Dashboard } from "./emadi_theme/dashboard";
+import { setup_header, toggle_theme } from "./emadi_theme/header";
 
 frappe.provide("emadi_theme");
-
-function enhance_search() {
-	const $bar = $(".navbar .search-bar").first();
-	if (!$bar.length || $bar.find(".et-kbd-hint").length) return;
-	const mod = frappe.utils.is_mac() ? "⌘" : "Ctrl";
-	$bar.append(`<span class="et-kbd-hint" aria-hidden="true"><kbd>${mod}</kbd><kbd>G</kbd></span>`);
-	$bar.find("#navbar-search").attr("placeholder", __("Search or type a command"));
-}
+emadi_theme.toggle_theme = toggle_theme;
 
 function setup() {
 	if (emadi_theme._ready) return;
@@ -27,11 +19,14 @@ function setup() {
 	try {
 		emadi_theme.rail = new Rail();
 	} catch (e) {
-		console.warn("[emadi_theme] rail disabled:", e);
+		console.warn("[emadi_theme] sidebar disabled:", e);
 	}
-	emadi_theme.hero = new Hero(emadi_theme.rail);
-
-	enhance_search();
+	try {
+		setup_header();
+	} catch (e) {
+		console.warn("[emadi_theme] header controls disabled:", e);
+	}
+	emadi_theme.dashboard = new Dashboard(emadi_theme.rail);
 
 	let timer = null;
 	let attempts = 0;
@@ -40,11 +35,9 @@ function setup() {
 		attempts = 0;
 		timer = setTimeout(function run() {
 			try {
-				track_current_route();
 				emadi_theme.rail && emadi_theme.rail.update_active && emadi_theme.rail.update_active();
 				const route = frappe.get_route() || [];
-				// Workspace DOM is built async: retry briefly until it exists
-				if (route[0] === "Workspaces" && !emadi_theme.hero.refresh() && attempts++ < 20) {
+				if (route[0] === "Workspaces" && !emadi_theme.dashboard.refresh() && attempts++ < 20) {
 					timer = setTimeout(run, 150);
 				}
 			} catch (e) {
@@ -59,5 +52,4 @@ function setup() {
 }
 
 $(document).on("app_ready", setup);
-// In case this bundle loads after app_ready already fired
 $(() => setTimeout(() => frappe.container && setup(), 0));

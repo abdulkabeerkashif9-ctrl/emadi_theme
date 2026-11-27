@@ -1,12 +1,13 @@
 /* ==========================================================================
-   List view · filters · paging · bulk actions
+   List view (Karkhana table: no header fill, 12px ink-3 headers,
+   40px rows with hairline dividers, 21px status pills)
    ========================================================================== */
 
 .frappe-list {
 	padding: 0 !important;
 }
 
-/* Standard filter bar (top of list) */
+/* Filter bar */
 .frappe-list .page-form,
 .layout-main-section .page-form,
 .page-form {
@@ -14,10 +15,10 @@
 	flex-wrap: wrap;
 	align-items: center;
 	gap: 8px;
-	padding: 12px 14px !important;
+	padding: 12px 16px !important;
 	margin: 0;
-	background: var(--et-surface);
-	border-bottom: 1px solid var(--et-border);
+	background: var(--k-surface);
+	border-bottom: 1px solid var(--k-line);
 }
 
 .page-form .form-group {
@@ -25,15 +26,9 @@
 	padding: 0 !important;
 }
 
-.page-form .frappe-control .form-control,
-.page-form .standard-filter-section .form-control {
-	height: var(--et-control-h-sm);
-	background: var(--et-surface-2);
-	box-shadow: none;
-}
-
-.page-form .frappe-control .form-control:focus {
-	background: var(--et-input-bg);
+.page-form .frappe-control .form-control {
+	height: 32px;
+	background: var(--k-surface);
 }
 
 .page-form .filter-section,
@@ -42,14 +37,8 @@
 	gap: 8px;
 }
 
-.filter-selector .btn,
-.sort-selector .btn,
-.filter-section .btn {
-	height: var(--et-control-h-sm);
-}
-
 .filter-selector .filter-x-button {
-	border-left: 1px solid var(--et-border);
+	border-left: 1px solid var(--k-line-2);
 }
 
 .sort-selector .btn-order {
@@ -63,23 +52,12 @@
 	margin-left: -1px;
 }
 
-/* Filter popover */
-.filter-popover .popover-body,
-.filter-area .filter-box {
-	padding: 12px;
-}
-
-.filter-box .filter-field .form-control,
-.filter-box .fieldname-select-area input {
-	height: var(--et-control-h-sm);
-}
-
 .filter-box .remove-filter {
-	border-radius: var(--et-r-sm);
+	border-radius: 6px;
 }
 
 .filter-popover .filter-action-buttons {
-	border-top: 1px solid var(--et-divider);
+	border-top: 1px solid var(--k-line);
 	padding-top: 10px;
 	margin-top: 6px;
 }
@@ -88,42 +66,40 @@
 .frappe-list .list-row-head,
 .list-row-head {
 	position: sticky;
-	top: calc(var(--et-nav-h) + 60px);
+	top: calc(var(--et-nav-h) + 52px);
 	z-index: 3;
-	min-height: 40px;
-	padding: 0 14px !important;
-	background: var(--et-surface-2) !important;
-	border-bottom: 1px solid var(--et-border);
+	min-height: 33px;
+	padding: 0 16px !important;
+	background: var(--k-surface) !important;
+	border-bottom: 1px solid var(--k-line);
 	border-radius: 0 !important;
-	color: var(--et-text-muted);
-	font-size: var(--et-fs-2xs);
-	font-weight: var(--et-fw-semibold);
-	letter-spacing: var(--et-tracking-caps);
-	text-transform: uppercase;
+	color: var(--k-ink-3);
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: normal;
+	text-transform: none;
 }
 
 .list-row-head .list-row-col,
 .list-row-head .list-subject,
 .list-row-head .level-item {
-	color: var(--et-text-muted);
-	font-size: var(--et-fs-2xs);
-	font-weight: var(--et-fw-semibold);
+	color: var(--k-ink-3);
+	font-size: 12px;
+	font-weight: 500;
 }
 
 .list-row-head .list-count {
-	color: var(--et-text-subtle);
-	letter-spacing: 0.02em;
+	color: var(--k-ink-3);
 	font-variant-numeric: tabular-nums;
 }
 
-/* Data rows */
+/* Rows */
 .frappe-list .result {
 	min-height: 200px;
 }
 
 .frappe-list .list-row-container {
-	border-bottom: 1px solid var(--et-divider);
-	transition: background-color var(--et-dur-fast) var(--et-ease);
+	border-bottom: 1px solid var(--k-line);
 }
 
 .frappe-list .list-row-container:last-child {
@@ -131,73 +107,66 @@
 }
 
 .frappe-list .list-row {
-	min-height: 46px;
-	padding: 0 14px;
+	min-height: 40px;
+	height: 40px;
+	padding: 0 16px;
 	border-radius: 0;
-	font-size: var(--et-fs-sm);
-	color: var(--et-text-2);
-	transition: background-color var(--et-dur-fast) var(--et-ease);
+	font-size: 13px;
+	color: var(--k-ink);
+	transition: background-color var(--et-dur) var(--et-ease);
 }
 
 .frappe-list .list-row:hover,
 .frappe-list .list-row-container:hover .list-row {
-	background: var(--highlight-color);
+	background: var(--k-surface-2);
 }
 
-/* Selected rows */
 .frappe-list .list-row-container:has(.list-row-checkbox:checked) .list-row {
-	background: var(--et-accent-soft);
-}
-
-.frappe-list .list-row-container:has(.list-row-checkbox:checked) {
-	box-shadow: inset 3px 0 0 var(--et-accent);
+	background: var(--k-gold-faint);
 }
 
 .frappe-list .list-row .list-row-col {
-	color: var(--et-text-2);
+	color: var(--k-ink);
 }
 
-.frappe-list .list-subject {
-	font-weight: var(--et-fw-medium);
-}
-
+.frappe-list .list-subject,
 .frappe-list .list-subject a,
 .frappe-list .list-subject .level-item.bold a,
 .frappe-list .list-subject .ellipsis {
-	color: var(--et-text);
-	font-weight: var(--et-fw-semibold);
+	color: var(--k-ink);
+	font-weight: 400;
+}
+
+.frappe-list .list-subject .level-item.bold a {
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.01em;
 }
 
 .frappe-list .list-row:hover .list-subject a {
-	color: var(--et-accent);
+	color: var(--k-ink);
+	text-decoration: underline;
+	text-decoration-color: var(--k-line-2);
+	text-underline-offset: 2px;
 }
 
 .frappe-list .list-row .filterable:hover {
-	color: var(--et-accent);
+	color: var(--k-gold-ink);
 }
 
 .frappe-list .list-row-activity,
 .frappe-list .list-row-activity .modified,
 .frappe-list .frappe-timestamp {
-	color: var(--et-text-subtle);
-	font-size: var(--et-fs-xs);
+	color: var(--k-ink-3);
+	font-size: 12px;
 	font-variant-numeric: tabular-nums;
-}
-
-.frappe-list .list-row-activity .comment-count {
-	color: var(--et-text-subtle);
 }
 
 .frappe-list .like-action .icon,
 .frappe-list .comment-count .icon {
-	--icon-stroke: var(--et-text-subtle);
+	--icon-stroke: var(--k-ink-3);
 }
 
-.frappe-list .list-row .indicator-pill {
-	height: 22px;
-}
-
-/* Numeric columns align and use tabular figures */
 .frappe-list .list-row-col.text-right,
 .frappe-list [data-fieldtype="Currency"],
 .frappe-list [data-fieldtype="Float"],
@@ -211,135 +180,114 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 12px 14px !important;
-	border-top: 1px solid var(--et-border);
-	background: var(--et-surface-2);
+	padding: 12px 16px !important;
+	border-top: 1px solid var(--k-line);
+	background: var(--k-surface);
 }
 
 .list-paging-area .btn-group .btn-paging {
 	height: 28px;
-	font-size: var(--et-fs-xs);
-	background: var(--et-surface);
-	border-color: var(--et-border);
-	color: var(--et-text-muted);
+	font-size: 12px;
+	background: var(--k-surface);
+	border-color: var(--k-line-2);
+	color: var(--k-ink-2);
 }
 
 .list-paging-area .btn-group .btn-paging.btn-info,
 .list-paging-area .btn-group .btn-paging.active {
-	background: var(--et-navy);
-	border-color: var(--et-navy);
-	color: #fff;
-}
-
-:root[data-theme="dark"] .list-paging-area .btn-group .btn-paging.btn-info {
-	background: var(--et-accent);
-	border-color: var(--et-accent);
-	color: #08101e;
+	background: var(--k-solid);
+	border-color: var(--k-solid);
+	color: var(--k-solid-ink);
 }
 
 .list-paging-area .btn-more {
 	height: 28px;
+	font-size: 12px;
 }
 
-/* Empty state */
 .frappe-list .no-result {
 	padding: 48px 16px;
 }
 
-.frappe-list .no-result .btn-new-doc {
-	margin-top: 12px;
-}
-
-/* Image / kanban / calendar / gantt views */
+/* Kanban / image / calendar / tree */
 .image-view-container .image-view-item {
-	border: 1px solid var(--et-border);
-	border-radius: var(--et-r-xl);
+	border: 1px solid var(--k-line);
+	border-radius: 8px;
 	overflow: hidden;
-	background: var(--et-surface);
-	box-shadow: var(--et-shadow-sm);
-	transition: box-shadow var(--et-dur) var(--et-ease), transform var(--et-dur) var(--et-ease);
+	background: var(--k-surface);
 }
 
 .image-view-container .image-view-item:hover {
-	box-shadow: var(--et-shadow-md);
-	transform: translateY(-1px);
+	border-color: var(--k-gold);
 }
 
 .kanban .kanban-column {
-	background: var(--et-surface-3);
-	border-radius: var(--et-r-xl);
-	padding: 10px;
+	background: var(--k-surface-3);
+	border-radius: 8px;
+	padding: 8px;
 }
 
 .kanban .kanban-column-title,
 .kanban .kanban-column-header {
-	font-weight: var(--et-fw-semibold);
-	color: var(--et-text);
+	font-weight: 600;
+	color: var(--k-ink);
 }
 
 .kanban .kanban-card {
-	background: var(--et-surface);
-	border: 1px solid var(--et-border);
-	border-radius: var(--et-r-lg);
-	box-shadow: var(--et-shadow-xs);
-	transition: box-shadow var(--et-dur) var(--et-ease), border-color var(--et-dur) var(--et-ease);
+	background: var(--k-surface);
+	border: 1px solid var(--k-line);
+	border-radius: 8px;
+	box-shadow: none;
 }
 
 .kanban .kanban-card:hover {
-	border-color: var(--et-accent-soft-2);
-	box-shadow: var(--et-shadow-md);
-}
-
-.kanban .kanban-card-title {
-	color: var(--et-text);
-	font-weight: var(--et-fw-medium);
+	border-color: var(--k-gold);
 }
 
 .fc .fc-toolbar-title,
 .fc-toolbar h2 {
-	font-size: var(--et-fs-lg) !important;
-	font-weight: var(--et-fw-semibold);
-	color: var(--et-text);
+	font-size: 18px !important;
+	font-weight: 600;
+	color: var(--k-ink);
 }
 
 .fc .fc-button-primary,
 .fc-button {
-	background: var(--et-surface) !important;
-	border: 1px solid var(--et-border-strong) !important;
-	color: var(--et-text) !important;
-	border-radius: var(--et-r-md) !important;
-	box-shadow: var(--et-shadow-xs) !important;
+	background: var(--k-surface) !important;
+	border: 1px solid var(--k-line-2) !important;
+	color: var(--k-ink) !important;
+	border-radius: 6px !important;
+	box-shadow: none !important;
 	text-transform: capitalize;
 }
 
 .fc .fc-button-primary.fc-button-active,
 .fc .fc-button-primary:not(:disabled):active {
-	background: var(--et-navy) !important;
-	border-color: var(--et-navy) !important;
-	color: #fff !important;
+	background: var(--k-solid) !important;
+	border-color: var(--k-solid) !important;
+	color: var(--k-solid-ink) !important;
 }
 
 .fc-theme-standard td,
 .fc-theme-standard th,
 .fc-theme-standard .fc-scrollgrid {
-	border-color: var(--et-border) !important;
+	border-color: var(--k-line) !important;
 }
 
 .fc .fc-day-today {
-	background: var(--et-accent-soft) !important;
+	background: var(--k-gold-faint) !important;
 }
 
-/* Tree view */
 .tree .tree-link {
-	border-radius: var(--et-r-sm);
+	border-radius: 6px;
 	padding: 3px 6px;
 }
 
 .tree .tree-link.active,
 .tree .tree-link:hover {
-	background: var(--et-accent-soft);
+	background: var(--k-surface-3);
 }
 
 .tree .tree-label {
-	color: var(--et-text);
+	color: var(--k-ink);
 }

@@ -1,126 +1,122 @@
 /* ==========================================================================
-   Application rail (persistent left navigation, built by emadi_theme.bundle.js
-   from frappe.boot.allowed_workspaces). Collapsed = icon rail with tooltips,
-   expanded = labelled sidebar. State is remembered per browser.
+   Sidebar (Karkhana: 232px charcoal, grouped modules, user card at bottom)
+   Built by js/emadi_theme/rail.js from frappe.boot.allowed_workspaces.
+   Collapsed state = 60px icon rail with tooltips (remembered per browser).
    ========================================================================== */
 
 .et-rail {
 	position: fixed;
-	z-index: 1030;
+	z-index: 30;
 	top: 0;
 	bottom: 0;
 	left: 0;
-	width: var(--et-rail-w);
+	width: var(--et-rail-w-open);
 	display: flex;
 	flex-direction: column;
-	background: var(--et-rail-bg);
-	border-right: 1px solid var(--et-rail-border);
-	color: var(--et-rail-text);
+	background: var(--k-side);
+	border-right: 1px solid var(--k-side-line);
+	color: var(--k-side-muted);
+	font-size: 13px;
 	transition: width var(--et-dur-slow) var(--et-ease), transform var(--et-dur-slow) var(--et-ease);
 	--icon-stroke: currentColor;
 	--icon-fill: transparent;
 	--icon-fill-bg: transparent;
 }
 
-/* Subtle texture at the top of the rail */
-.et-rail::before {
-	content: "";
-	position: absolute;
-	inset: 0 0 auto 0;
-	height: 220px;
-	pointer-events: none;
-	background: radial-gradient(120% 80% at 0% 0%, rgba(91, 149, 249, 0.18), transparent 70%);
-}
-
-.et-rail__brand {
-	position: relative;
+/* Brand row: 52px, logo + name + collapse button */
+.et-rail__brand-row {
 	display: flex;
 	align-items: center;
-	gap: 12px;
+	gap: 10px;
 	height: var(--et-nav-h);
 	padding: 0 16px;
 	flex-shrink: 0;
-	color: #fff;
-	text-decoration: none !important;
-	border-bottom: 1px solid var(--et-rail-border);
 }
 
-.et-rail__logo {
-	width: 34px;
-	height: 34px;
-	flex-shrink: 0;
-	display: grid;
-	place-items: center;
-	border-radius: var(--et-r-md);
-	background: #fff;
-	overflow: hidden;
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset, 0 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-.et-rail__logo img {
-	max-width: 26px;
-	max-height: 26px;
-}
-
-.et-rail__brand-text {
+.et-rail__brand {
 	display: flex;
-	flex-direction: column;
+	align-items: center;
+	gap: 10px;
 	min-width: 0;
-	line-height: 1.2;
+	flex: 1;
+	color: var(--k-side-ink);
+	text-decoration: none !important;
+}
+
+.et-rail__brand:hover {
+	color: var(--k-side-ink);
+}
+
+.et-rail__brand .k-logo {
+	flex-shrink: 0;
 }
 
 .et-rail__brand-name {
-	color: #fff;
-	font-weight: var(--et-fw-semibold);
-	font-size: var(--et-fs-base);
-	letter-spacing: -0.01em;
+	font-size: 15px;
+	font-weight: 600;
+	letter-spacing: -0.015em;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
-.et-rail__brand-sub {
-	color: var(--et-rail-text);
-	font-size: var(--et-fs-2xs);
-	letter-spacing: var(--et-tracking-caps);
-	text-transform: uppercase;
+.et-rail__collapse {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	flex-shrink: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 6px;
+	background: transparent;
+	color: var(--k-side-muted);
+	cursor: pointer;
+	transition: background-color var(--et-dur) var(--et-ease), color var(--et-dur) var(--et-ease);
 }
 
+.et-rail__collapse:hover {
+	background: var(--k-side-2);
+	color: var(--k-side-ink);
+}
+
+/* Nav */
 .et-rail__scroll {
-	position: relative;
 	flex: 1;
 	overflow-y: auto;
 	overflow-x: hidden;
-	padding: 12px 12px;
-	scrollbar-width: none;
+	padding: 0 10px 12px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--k-side-line) transparent;
 }
 
-.et-rail__scroll::-webkit-scrollbar {
-	display: none;
+.et-rail__group + .et-rail__group {
+	margin-top: 12px;
 }
 
 .et-rail__group-label {
-	padding: 14px 10px 6px;
-	font-size: 10.5px;
-	font-weight: var(--et-fw-semibold);
-	letter-spacing: var(--et-tracking-caps);
+	padding: 0 10px 4px;
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	color: rgba(203, 214, 230, 0.45);
+	color: var(--k-side-muted);
 	white-space: nowrap;
+	overflow: hidden;
 }
 
 .et-rail__item {
 	position: relative;
 	display: flex;
 	align-items: center;
-	gap: 12px;
-	height: 40px;
-	padding: 0 11px;
-	margin-bottom: 2px;
-	border-radius: var(--et-r-md);
-	color: var(--et-rail-text);
-	font-size: var(--et-fs-sm);
-	font-weight: var(--et-fw-medium);
+	gap: 10px;
+	height: 32px;
+	padding: 0 10px;
+	border-radius: 6px;
+	color: var(--k-side-muted);
+	font-size: 13px;
+	font-weight: 400;
 	white-space: nowrap;
 	cursor: pointer;
 	text-decoration: none !important;
@@ -128,126 +124,267 @@
 	background: transparent;
 	width: 100%;
 	text-align: left;
-	transition: background-color var(--et-dur-fast) var(--et-ease), color var(--et-dur-fast) var(--et-ease);
+	transition: background-color var(--et-dur) var(--et-ease), color var(--et-dur) var(--et-ease);
 }
 
 .et-rail__item:hover {
-	background: var(--et-rail-hover);
-	color: var(--et-rail-text-active);
+	background: var(--k-side-2);
+	color: var(--k-side-ink);
 }
 
 .et-rail__item:focus-visible {
-	outline: 2px solid var(--et-rail-indicator);
+	outline: 2px solid var(--k-gold);
 	outline-offset: -2px;
 }
 
 .et-rail__item.is-active {
-	background: var(--et-rail-active);
-	color: var(--et-rail-text-active);
+	background: var(--k-side-2);
+	color: var(--k-side-ink);
+	font-weight: 500;
 }
 
+/* Active marker: 2px gold bar, inset 8px top/bottom */
 .et-rail__item.is-active::before {
 	content: "";
 	position: absolute;
-	left: -12px;
-	top: 9px;
-	bottom: 9px;
-	width: 3px;
-	border-radius: 0 3px 3px 0;
-	background: var(--et-rail-indicator);
+	left: 0;
+	top: 8px;
+	bottom: 8px;
+	width: 2px;
+	border-radius: 999px;
+	background: var(--k-gold);
 }
 
 .et-rail__icon {
-	width: 22px;
-	height: 22px;
+	width: 16px;
+	height: 16px;
 	flex-shrink: 0;
 	display: grid;
 	place-items: center;
 }
 
 .et-rail__icon svg {
-	width: 20px;
-	height: 20px;
+	width: 16px;
+	height: 16px;
 	stroke: currentColor;
 }
 
+.et-rail__item.is-active .et-rail__icon {
+	color: var(--k-gold);
+}
+
 .et-rail__label {
-	opacity: 0;
 	min-width: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	transition: opacity var(--et-dur) var(--et-ease);
 }
 
+/* User card */
 .et-rail__footer {
 	position: relative;
-	padding: 10px 12px 14px;
-	border-top: 1px solid var(--et-rail-border);
+	padding: 10px;
+	border-top: 1px solid var(--k-side-line);
 	flex-shrink: 0;
 }
 
-/* Collapsed tooltips */
-body:not(.et-rail-expanded) .et-rail__item[data-label]:hover::after {
-	content: attr(data-label);
-	position: absolute;
-	left: calc(100% + 14px);
-	top: 50%;
-	transform: translateY(-50%);
-	padding: 6px 10px;
-	border-radius: var(--et-r-sm);
-	background: #0b1626;
-	color: #fff;
-	font-size: var(--et-fs-xs);
-	font-weight: var(--et-fw-medium);
-	white-space: nowrap;
-	box-shadow: var(--et-shadow-lg);
-	pointer-events: none;
-	animation: et-pop var(--et-dur-fast) var(--et-ease) both;
-	z-index: 10;
+.et-rail__user {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+	padding: 6px;
+	border: 0;
+	border-radius: 6px;
+	background: transparent;
+	text-align: left;
+	cursor: pointer;
+	color: var(--k-side-ink);
+	transition: background-color var(--et-dur) var(--et-ease);
 }
 
-body:not(.et-rail-expanded) .et-rail__brand-text,
-body:not(.et-rail-expanded) .et-rail__group-label {
-	opacity: 0;
-	pointer-events: none;
+.et-rail__user:hover,
+.et-rail__user[aria-expanded="true"] {
+	background: var(--k-side-2);
 }
 
-body:not(.et-rail-expanded) .et-rail__group-label {
-	height: 10px;
-	padding: 0;
+.et-rail__avatar {
+	width: 30px;
+	height: 30px;
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: var(--k-sage-soft);
+	color: var(--k-ink);
+	font-size: 11px;
+	font-weight: 600;
 	overflow: hidden;
 }
 
-/* Expanded */
-body.et-rail-expanded .et-rail {
-	width: var(--et-rail-w-open);
+.et-rail__avatar img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
-body.et-rail-expanded .et-rail__label {
-	opacity: 1;
+.et-rail__user-text {
+	min-width: 0;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	line-height: 1.35;
 }
 
-.et-rail__toggle .et-rail__icon svg {
-	transition: transform var(--et-dur-slow) var(--et-ease);
+.et-rail__user-name {
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--k-side-ink);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-body.et-rail-expanded .et-rail__toggle .et-rail__icon svg {
+.et-rail__user-sub {
+	font-size: 11px;
+	color: var(--k-side-muted);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.et-rail__user .k-icon {
+	color: var(--k-side-muted);
+	flex-shrink: 0;
+}
+
+.et-rail__menu {
+	position: absolute;
+	left: 10px;
+	right: 10px;
+	bottom: calc(100% - 4px);
+	padding: 4px;
+	background: var(--k-surface);
+	border: 1px solid var(--k-line);
+	border-radius: 8px;
+	box-shadow: var(--k-shadow-2);
+	display: none;
+	animation: et-pop var(--et-dur) var(--et-ease) both;
+	z-index: 5;
+}
+
+.et-rail__menu.is-open {
+	display: block;
+}
+
+.et-rail__menu button {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+	height: 32px;
+	padding: 0 8px;
+	border: 0;
+	border-radius: 4px;
+	background: transparent;
+	color: var(--k-ink);
+	font-size: 13px;
+	text-align: left;
+	cursor: pointer;
+}
+
+.et-rail__menu button:hover {
+	background: var(--k-surface-3);
+}
+
+.et-rail__menu .k-icon {
+	color: var(--k-ink-3);
+}
+
+.et-rail__menu hr {
+	margin: 4px 0;
+	border-top: 1px solid var(--k-line);
+}
+
+/* ---------- Collapsed (icon rail) ---------- */
+body.et-rail-collapsed .et-rail {
+	width: var(--et-rail-w);
+}
+
+body.et-rail-collapsed .et-rail__brand-name,
+body.et-rail-collapsed .et-rail__label,
+body.et-rail-collapsed .et-rail__user-text,
+body.et-rail-collapsed .et-rail__user > .k-icon {
+	display: none;
+}
+
+body.et-rail-collapsed .et-rail__brand-row {
+	padding: 0 16px;
+	flex-direction: column;
+	justify-content: center;
+	height: auto;
+	padding-top: 12px;
+	padding-bottom: 8px;
+	gap: 8px;
+}
+
+body.et-rail-collapsed .et-rail__collapse svg {
 	transform: rotate(180deg);
 }
 
-/* Desktop: push the app over */
+body.et-rail-collapsed .et-rail__group-label {
+	height: 1px;
+	padding: 0;
+	margin: 8px 10px;
+	background: var(--k-side-line);
+	color: transparent;
+}
+
+body.et-rail-collapsed .et-rail__item {
+	justify-content: center;
+	padding: 0;
+}
+
+body.et-rail-collapsed .et-rail__user {
+	justify-content: center;
+}
+
+body.et-rail-collapsed .et-rail__menu {
+	left: 10px;
+	right: auto;
+	width: 200px;
+}
+
+body.et-rail-collapsed .et-rail__item[data-label]:hover::after {
+	content: attr(data-label);
+	position: absolute;
+	left: calc(100% + 12px);
+	top: 50%;
+	transform: translateY(-50%);
+	padding: 4px 8px;
+	border-radius: 6px;
+	background: var(--k-solid);
+	color: var(--k-solid-ink);
+	font-size: 12px;
+	font-weight: 500;
+	white-space: nowrap;
+	box-shadow: var(--k-shadow-2);
+	pointer-events: none;
+	z-index: 10;
+}
+
+/* ---------- Desktop: push the app over ---------- */
 @media (min-width: 992px) {
-	/* Frappe sets body { padding: 0 !important }, so !important is required */
+	/* Frappe sets body { padding: 0 !important } */
 	body.et-has-rail {
-		padding-left: var(--et-rail-w) !important;
+		padding-left: var(--et-rail-w-open) !important;
 		transition: padding-left var(--et-dur-slow) var(--et-ease);
 	}
 
-	body.et-has-rail.et-rail-expanded {
-		padding-left: var(--et-rail-w-open) !important;
+	body.et-has-rail.et-rail-collapsed {
+		padding-left: var(--et-rail-w) !important;
 	}
 
-	/* Logo lives in the rail now */
 	body.et-has-rail .navbar .navbar-brand {
 		display: none;
 	}
@@ -257,33 +394,49 @@ body.et-rail-expanded .et-rail__toggle .et-rail__icon svg {
 	}
 }
 
-/* Tablet / mobile: off-canvas drawer */
+/* ---------- Tablet / phone: off-canvas drawer ---------- */
 @media (max-width: 991.98px) {
 	.et-rail {
-		width: var(--et-rail-w-open);
+		width: var(--et-rail-w-open) !important;
 		transform: translateX(-100%);
-		box-shadow: none;
 	}
 
-	.et-rail .et-rail__label,
-	.et-rail .et-rail__brand-text,
-	.et-rail .et-rail__group-label {
-		opacity: 1 !important;
-		height: auto !important;
-		padding-top: 14px;
+	body.et-rail-collapsed .et-rail__brand-name,
+	body.et-rail-collapsed .et-rail__label,
+	body.et-rail-collapsed .et-rail__user-text {
+		display: block;
 	}
 
-	.et-rail .et-rail__item::after {
-		display: none !important;
+	body.et-rail-collapsed .et-rail__item {
+		justify-content: flex-start;
+		padding: 0 10px;
 	}
 
-	.et-rail__toggle {
+	body.et-rail-collapsed .et-rail__group-label {
+		height: auto;
+		margin: 0;
+		padding: 0 10px 4px;
+		background: none;
+		color: var(--k-side-muted);
+	}
+
+	body.et-rail-collapsed .et-rail__brand-row {
+		flex-direction: row;
+		height: var(--et-nav-h);
+		padding: 0 16px;
+	}
+
+	.et-rail__collapse {
+		display: none;
+	}
+
+	.et-rail__item::after {
 		display: none !important;
 	}
 
 	body.et-rail-open .et-rail {
-		transform: translateX(0);
-		box-shadow: var(--et-shadow-xl);
+		transform: none;
+		box-shadow: var(--k-shadow-3);
 	}
 
 	body.et-rail-open .et-rail-backdrop {
@@ -295,8 +448,8 @@ body.et-rail-expanded .et-rail__toggle .et-rail__icon svg {
 .et-rail-backdrop {
 	position: fixed;
 	inset: 0;
-	z-index: 1029;
-	background: var(--et-overlay);
+	z-index: 29;
+	background: var(--k-overlay);
 	opacity: 0;
 	pointer-events: none;
 	transition: opacity var(--et-dur-slow) var(--et-ease);
@@ -306,21 +459,20 @@ body.et-rail-expanded .et-rail__toggle .et-rail__icon svg {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 36px;
-	height: 36px;
-	border-radius: var(--et-r-md);
+	width: 32px;
+	height: 32px;
+	flex-shrink: 0;
+	border-radius: 6px;
 	border: 0;
 	background: transparent;
-	color: var(--et-text-2);
-	--icon-stroke: currentColor;
-	flex-shrink: 0;
+	color: var(--k-ink-2);
 }
 
 .et-rail-mobile-btn:hover {
-	background: var(--et-surface-hover);
+	background: var(--k-surface-3);
 }
 
-/* Modals & full-screen overlays must sit above the rail (rail = 1030) */
+/* Overlays above the sidebar */
 .modal-backdrop {
 	z-index: 1040;
 }
@@ -329,7 +481,6 @@ body.et-rail-expanded .et-rail__toggle .et-rail__icon svg {
 	z-index: 1050;
 }
 
-/* Print: never show chrome */
 @media print {
 	.et-rail,
 	.et-rail-backdrop {

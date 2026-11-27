@@ -61,8 +61,8 @@ a:hover {
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:not(:disabled):not(.disabled):active {
-	background: #1b3860;
-	border-color: #1b3860;
+	background: var(--k-graphite);
+	border-color: var(--k-graphite);
 	color: #fff;
 }
 

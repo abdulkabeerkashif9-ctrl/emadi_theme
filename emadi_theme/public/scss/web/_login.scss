@@ -1,22 +1,31 @@
 /* ==========================================================================
-   Login / Signup / Forgot password: split-screen composition
-   Markup: frappe/www/login.html (unchanged). The brand panel is added by
-   emadi_theme_web.bundle.js; without JS the form still renders centred.
+   Login (Karkhana): cream form column left · charcoal artwork panel right
+   grid-cols: 1fr | 1.05fr. Frappe's login form & auth flow are unchanged;
+   the brand row, artwork panel and footer are added by the web bundle JS.
    ========================================================================== */
 
 body.et-auth,
 body[data-path="login"],
 body[data-path="update-password"] {
-	background: var(--et-surface);
+	background: var(--k-bg);
+	color: var(--k-ink);
+	font-family: var(--et-font);
+	font-size: 13px;
+	font-feature-settings: "cv11", "ss01";
 	min-height: 100vh;
 }
 
-/* Hide the website chrome on the auth screen */
 body.et-auth .navbar,
 body.et-auth nav.navbar,
 body.et-auth .web-footer,
 body.et-auth footer {
 	display: none !important;
+}
+
+@media (min-width: 992px) {
+	body.et-auth {
+		padding-right: calc(100vw * 1.05 / 2.05) !important;
+	}
 }
 
 body.et-auth .page-content-wrapper,
@@ -26,221 +35,146 @@ body.et-auth main {
 	align-items: center;
 	justify-content: center;
 	margin: 0 !important;
-	padding: 32px 24px !important;
+	padding: 96px 24px !important;
+	background: transparent;
 }
 
 body.et-auth .page-content-wrapper > .container,
 body.et-auth main > .container,
 body.et-auth .page_content {
 	width: 100%;
-	max-width: 420px;
+	max-width: 360px;
 	padding: 0 !important;
 	margin: 0 auto;
 	min-height: 0;
 }
 
-@media (min-width: 992px) {
-	body.et-auth {
-		padding-left: min(46vw, 640px);
+/* Brand row (top-left) and footer (bottom-left) */
+.k-auth-brand {
+	position: fixed;
+	top: 24px;
+	left: 48px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--k-ink);
+	font-size: 18px;
+	font-weight: 600;
+	letter-spacing: -0.015em;
+	z-index: 2;
+}
+
+.k-auth-brand svg {
+	width: 32px;
+	height: 32px;
+}
+
+.k-auth-foot {
+	position: fixed;
+	left: 48px;
+	bottom: 24px;
+	font-size: 11px;
+	color: var(--k-ink-3);
+	z-index: 2;
+}
+
+@media (max-width: 575.98px) {
+	.k-auth-brand {
+		left: 24px;
+	}
+
+	.k-auth-foot {
+		left: 24px;
 	}
 }
 
-/* ---------- Brand panel ---------- */
-.et-auth-aside {
+/* Artwork panel */
+.k-auth-aside {
 	position: fixed;
 	top: 0;
+	right: 0;
 	bottom: 0;
-	left: 0;
-	width: min(46vw, 640px);
+	width: calc(100vw * 1.05 / 2.05);
 	display: none;
-	flex-direction: column;
-	justify-content: space-between;
-	padding: 44px 52px;
 	overflow: hidden;
-	color: #fff;
-	background: #142b49;
+	background: var(--k-side);
 }
 
 @media (min-width: 992px) {
-	.et-auth-aside {
-		display: flex;
+	.k-auth-aside {
+		display: block;
 	}
 }
 
-/* Engineered background: fine grid, two soft lights, a thin horizon line */
-.et-auth-aside::before {
-	content: "";
+.k-auth-aside > svg {
 	position: absolute;
 	inset: 0;
-	background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-	background-size: 32px 32px;
-	-webkit-mask-image: radial-gradient(ellipse at 30% 40%, #000 0%, transparent 75%);
-	mask-image: radial-gradient(ellipse at 30% 40%, #000 0%, transparent 75%);
+	width: 100%;
+	height: 100%;
 }
 
-.et-auth-aside::after {
-	content: "";
+.k-auth-aside .k-arc {
+	stroke-dasharray: 1 1;
+	stroke-dashoffset: 1;
+	animation: k-draw 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+@keyframes k-draw {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+.k-auth-copy {
 	position: absolute;
-	inset: 0;
-	background: radial-gradient(600px 400px at 85% 10%, rgba(52, 120, 246, 0.38), transparent 60%),
-		radial-gradient(500px 360px at 0% 100%, rgba(52, 84, 119, 0.7), transparent 60%);
-	pointer-events: none;
+	left: 48px;
+	bottom: 48px;
+	max-width: 384px;
 }
 
-.et-auth-aside > * {
-	position: relative;
-	z-index: 1;
-}
-
-.et-auth-brand {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	font-weight: 600;
-	font-size: 15px;
-	letter-spacing: -0.01em;
-}
-
-.et-auth-brand__logo {
-	width: 38px;
-	height: 38px;
-	border-radius: 9px;
-	background: #fff;
-	display: grid;
-	place-items: center;
-	overflow: hidden;
-	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-}
-
-.et-auth-brand__logo img {
-	max-width: 28px;
-	max-height: 28px;
-}
-
-.et-auth-copy {
-	max-width: 460px;
-}
-
-.et-auth-copy__eyebrow {
-	display: inline-flex;
-	align-items: center;
-	gap: 8px;
-	padding: 5px 10px;
-	border-radius: 999px;
-	border: 1px solid rgba(255, 255, 255, 0.16);
-	background: rgba(255, 255, 255, 0.06);
-	font-size: 12px;
-	font-weight: 500;
-	color: rgba(226, 234, 245, 0.85);
-}
-
-.et-auth-copy__eyebrow i {
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
-	background: #4ade80;
-	box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
-}
-
-.et-auth-copy h2 {
-	margin: 20px 0 14px;
-	color: #fff;
-	font-size: 36px;
-	line-height: 1.15;
-	font-weight: 600;
-	letter-spacing: -0.03em;
-}
-
-.et-auth-copy p {
-	color: rgba(226, 234, 245, 0.78);
-	font-size: 15px;
-	line-height: 1.6;
+.k-auth-copy p:first-child {
 	margin: 0;
-}
-
-.et-auth-features {
-	list-style: none;
-	padding: 0;
-	margin: 32px 0 0;
-	display: grid;
-	gap: 14px;
-}
-
-.et-auth-features li {
-	display: flex;
-	align-items: flex-start;
-	gap: 12px;
-	color: rgba(226, 234, 245, 0.9);
-	font-size: 14px;
-}
-
-.et-auth-features li span.et-tick {
-	flex-shrink: 0;
-	width: 22px;
-	height: 22px;
-	border-radius: 6px;
-	display: grid;
-	place-items: center;
-	background: rgba(52, 120, 246, 0.25);
-	border: 1px solid rgba(91, 149, 249, 0.4);
-	color: #cfe0ff;
-}
-
-.et-auth-features li strong {
-	display: block;
-	color: #fff;
+	font-size: 24px;
 	font-weight: 600;
+	line-height: 1.375;
+	letter-spacing: -0.025em;
+	color: var(--k-side-ink);
 }
 
-.et-auth-features li small {
-	display: block;
-	color: rgba(226, 234, 245, 0.66);
+.k-auth-copy p + p {
+	margin: 8px 0 0;
 	font-size: 13px;
-	margin-top: 1px;
+	color: var(--k-side-muted);
 }
 
-.et-auth-foot {
-	display: flex;
-	justify-content: space-between;
-	color: rgba(226, 234, 245, 0.55);
-	font-size: 12px;
-}
-
-/* ---------- Form side ---------- */
+/* Form */
 body.et-auth .page-card-head {
-	padding: 0 0 22px;
+	padding: 0 0 28px;
+	margin: 0;
 	text-align: left;
 }
 
 body.et-auth .page-card-head img,
 body.et-auth .page-card-head .app-logo {
-	max-height: 40px;
-	margin-bottom: 18px;
-}
-
-@media (min-width: 992px) {
-	body.et-auth .page-card-head img,
-	body.et-auth .page-card-head .app-logo {
-		display: none;
-	}
+	display: none;
 }
 
 body.et-auth .page-card-head h4 {
 	margin: 0;
-	font-size: 26px;
+	font-size: 32px;
 	font-weight: 600;
-	letter-spacing: -0.025em;
-	color: var(--et-text);
+	line-height: 1.2;
+	letter-spacing: -0.03em;
+	color: var(--k-ink);
 }
 
-body.et-auth .page-card-head .et-auth-sub {
+body.et-auth .page-card-head .k-auth-sub {
 	margin-top: 6px;
-	font-weight: 400;
-	letter-spacing: 0;
-	line-height: 1.5;
-	color: var(--et-text-muted);
 	font-size: 14px;
+	font-weight: 400;
+	letter-spacing: normal;
+	line-height: 1.5;
+	color: var(--k-ink-3);
 }
 
 body.et-auth .login-content.container,
@@ -255,8 +189,8 @@ body.et-auth .for-email-login .page-card {
 	padding: 0;
 	background: transparent;
 	border: 0;
-	box-shadow: none;
 	border-radius: 0;
+	box-shadow: none;
 }
 
 body.et-auth .page-card form {
@@ -268,138 +202,178 @@ body.et-auth .page-card .form-group {
 }
 
 body.et-auth .page-card .form-label,
-body.et-auth .page-card label {
+body.et-auth .page-card label,
+body.et-auth .page-card .form-label.sr-only {
+	position: static !important;
+	width: auto !important;
+	height: auto !important;
+	clip: auto !important;
+	overflow: visible !important;
+	white-space: normal !important;
 	display: block;
-	margin-bottom: 6px;
-	font-size: 13px;
-	font-weight: 600;
-	color: var(--et-text-2);
+	margin: 0 0 4px !important;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--k-ink-2);
 }
 
 body.et-auth .page-card .page-card-body input[type="text"],
 body.et-auth .page-card .page-card-body input[type="email"],
 body.et-auth .page-card .page-card-body input[type="password"],
 body.et-auth .page-card .page-card-body .form-control {
-	height: 44px;
+	height: 40px;
 	margin-bottom: 0;
-	padding-left: 40px;
-	font-size: 14px;
-	color: var(--et-text);
-	background: var(--et-input-bg);
-	border: 1px solid var(--et-input-border);
-	border-radius: var(--et-r-md);
-	box-shadow: var(--et-shadow-xs);
-	transition: border-color var(--et-dur-fast) var(--et-ease), box-shadow var(--et-dur-fast) var(--et-ease);
+	padding: 0 10px;
+	font-size: 13px;
+	color: var(--k-ink);
+	background: var(--k-surface);
+	border: 1px solid var(--k-line-2);
+	border-radius: 6px;
+	box-shadow: none;
+	transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.et-auth .page-card .page-card-body .password-field input {
+	padding-right: 40px;
 }
 
 body.et-auth .page-card .page-card-body input:hover {
-	border-color: var(--et-input-border-hover);
+	border-color: var(--k-ink-3);
 }
 
 body.et-auth .page-card .page-card-body input:focus {
-	border-color: var(--et-accent);
-	box-shadow: 0 0 0 3px var(--et-accent-ring);
+	border-color: var(--k-gold);
+	box-shadow: none;
 	outline: none;
 }
 
 body.et-auth .page-card .page-card-body .field-icon {
-	top: 50% !important;
-	left: 13px !important;
-	transform: translateY(-50%);
-	--icon-stroke: var(--et-text-subtle);
+	display: none;
 }
 
+/* "Show" → eye icon */
 body.et-auth .page-card .page-card-body .toggle-password {
 	top: 50% !important;
-	right: 12px !important;
+	right: 8px !important;
 	transform: translateY(-50%);
-	color: var(--et-accent);
-	font-size: 12px;
-	font-weight: 600;
+	width: 23px;
+	height: 23px;
+	font-size: 0 !important;
+	line-height: 0 !important;
+	overflow: hidden;
+	border-radius: 4px;
+	color: var(--k-ink-3);
+	cursor: pointer;
+}
+
+body.et-auth .page-card .page-card-body .toggle-password::before {
+	content: "";
+	position: absolute;
+	inset: 4px;
+	background-color: currentColor;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+}
+
+body.et-auth .page-card .page-card-body .toggle-password:hover {
+	color: var(--k-ink);
 }
 
 body.et-auth .page-card .forgot-password-message {
+	margin: 0 0 4px;
 	text-align: right;
-	margin-top: -4px;
-	margin-bottom: 4px;
+	line-height: 1.5;
 }
 
-body.et-auth .page-card .forgot-password-message a {
-	color: var(--et-accent);
+body.et-auth .page-card .forgot-password-message a,
+body.et-auth .page-card .forgot-password-message > * {
+	color: var(--k-gold-ink) !important;
 	font-size: 13px;
-	font-weight: 500;
+	font-weight: 400;
+}
+
+body.et-auth .page-card .forgot-password-message a:hover {
+	text-decoration: underline;
 }
 
 body.et-auth .page-card .page-card-actions {
-	margin-top: 22px;
+	margin-top: 16px;
 }
 
 body.et-auth .page-card .btn-primary,
 body.et-auth .page-card .btn-login {
-	height: 44px;
-	font-size: 14px;
-	font-weight: 600;
-	border-radius: var(--et-r-md);
-	background: var(--et-navy);
-	border: 1px solid var(--et-navy);
-	color: #fff;
-	box-shadow: 0 8px 20px -10px rgba(20, 43, 73, 0.65);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	width: 100%;
+	height: 40px;
+	padding: 0 16px;
+	font-size: 13px;
+	font-weight: 500;
+	border-radius: 6px;
+	background: var(--k-solid);
+	border: 0;
+	color: var(--k-solid-ink);
+	box-shadow: none;
+	transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body.et-auth .page-card .btn-primary:hover,
 body.et-auth .page-card .btn-login:hover {
-	background: #1b3860;
-	border-color: #1b3860;
+	background: var(--k-solid);
+	color: var(--k-solid-ink);
+	opacity: 0.9;
 }
 
 body.et-auth .page-card .btn-primary:focus-visible {
-	box-shadow: 0 0 0 3px var(--et-accent-ring);
+	outline: 2px solid var(--k-gold);
+	outline-offset: 1px;
 }
 
 body.et-auth .login-divider {
 	display: flex;
 	align-items: center;
 	gap: 12px;
-	margin: 22px 0;
-	color: var(--et-text-subtle);
+	margin: 20px 0;
+	color: var(--k-ink-3);
 	font-size: 12px;
-	text-transform: uppercase;
-	letter-spacing: 0.06em;
 }
 
 body.et-auth .page-card .btn-login-option,
 body.et-auth .page-card .btn-default {
-	height: 42px;
+	height: 40px;
 	align-items: center;
-	background: var(--et-surface);
-	border: 1px solid var(--et-border-strong);
-	color: var(--et-text);
+	background: var(--k-surface);
+	border: 1px solid var(--k-line-2);
+	color: var(--k-ink);
 	font-weight: 500;
-	border-radius: var(--et-r-md);
-	box-shadow: var(--et-shadow-xs);
+	border-radius: 6px;
+	box-shadow: none;
 }
 
 body.et-auth .page-card .btn-login-option:hover,
 body.et-auth .page-card .btn-default:hover {
-	background: var(--et-surface-hover);
-	border-color: var(--et-input-border-hover);
+	background: var(--k-surface-3);
+	border-color: var(--k-line-2);
 }
 
 body.et-auth .sign-up-message {
-	margin-top: 22px;
+	margin-top: 20px;
 	text-align: center;
-	color: var(--et-text-muted);
+	color: var(--k-ink-3);
 	font-size: 13px;
 }
 
 body.et-auth .sign-up-message a {
-	color: var(--et-accent);
-	font-weight: 600;
+	color: var(--k-gold-ink);
+	font-weight: 500;
 }
 
 body.et-auth .page-card-body.invalid input {
-	border-color: var(--et-danger);
-	box-shadow: 0 0 0 3px var(--et-danger-soft);
+	border-color: var(--k-bad) !important;
 }
 
 body.et-auth .for-login,
@@ -407,5 +381,5 @@ body.et-auth .for-forgot,
 body.et-auth .for-signup,
 body.et-auth .for-login-with-email-link,
 body.et-auth .for-email-login {
-	animation: et-rise 320ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+	animation: et-rise 220ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
